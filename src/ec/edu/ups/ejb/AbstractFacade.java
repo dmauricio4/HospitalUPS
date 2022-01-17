@@ -3,6 +3,7 @@
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 public abstract class AbstractFacade<T> {
 
@@ -30,6 +31,13 @@ public abstract class AbstractFacade<T> {
 	return getEntityManager().find(entityClass, id);
     }
 
+    public List<T> findbylogin(String correo,String password) {
+		TypedQuery<T> query = (TypedQuery<T>) getEntityManager().createQuery("SELECT p FROM Persona p WHERE p.correo = :correo and p.password= :password");
+		query.setParameter("correo",correo);
+		query.setParameter("password",password );
+		return query.getResultList();
+	}
+    
     public List<T> findAll() {
 	javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
 	cq.select(cq.from(entityClass));

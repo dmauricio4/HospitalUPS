@@ -1,6 +1,8 @@
 package ec.edu.ups.entidad;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
 
 /**
@@ -16,49 +18,112 @@ public class Paciente implements Serializable {
 	@Id
 	@GeneratedValue(strategy= GenerationType.AUTO)
 	private int codigo;
-	private int aniosExperiencia;
+	private int cantidad;
 	
 	@ManyToOne
 	private Persona paciente;
+	
+	@OneToMany(mappedBy="pacienteCita")
+	private List<Cita> citas;
+	
 	public Paciente() {
 		super();
 	}
-	public Paciente(int codigo, int aniosExperiencia) {
+
+
+
+
+	
+
+	public Paciente(int codigo, int cantidad, Persona paciente, List<Cita> citas) {
 		super();
 		this.codigo = codigo;
-		this.aniosExperiencia = aniosExperiencia;
+		this.cantidad = cantidad;
+		this.paciente = paciente;
+		this.citas = citas;
 	}
+
+
+
+
+
+
+	public List<Cita> getCitas() {
+		return citas;
+	}
+
+
+
+	public void setCitas(List<Cita> citas) {
+		this.citas = citas;
+	}
+
+
+
 	public int getCodigo() {
 		return codigo;
 	}
 	public void setCodigo(int codigo) {
 		this.codigo = codigo;
 	}
-	public int getAniosExperiencia() {
-		return aniosExperiencia;
+
+	
+	public int getCantidad() {
+		return cantidad;
 	}
-	public void setAniosExperiencia(int aniosExperiencia) {
-		this.aniosExperiencia = aniosExperiencia;
+
+
+
+
+
+
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
 	}
+
+
+
+
+
+
 	public Persona getPaciente() {
 		return paciente;
 	}
 	public void setPaciente(Persona paciente) {
 		this.paciente = paciente;
 	}
+
+
+
+
+
 	@Override
 	public String toString() {
-		return "Paciente [codigo=" + codigo + ", aniosExperiencia=" + aniosExperiencia + ", paciente=" + paciente + "]";
+		return "Paciente [codigo=" + codigo + ", cantidad=" + cantidad + ", paciente=" + paciente + ", citas=" + citas
+				+ "]";
 	}
+
+
+
+
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + aniosExperiencia;
+		result = prime * result + cantidad;
+		result = prime * result + ((citas == null) ? 0 : citas.hashCode());
 		result = prime * result + codigo;
 		result = prime * result + ((paciente == null) ? 0 : paciente.hashCode());
 		return result;
 	}
+
+
+
+
+
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -68,7 +133,12 @@ public class Paciente implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Paciente other = (Paciente) obj;
-		if (aniosExperiencia != other.aniosExperiencia)
+		if (cantidad != other.cantidad)
+			return false;
+		if (citas == null) {
+			if (other.citas != null)
+				return false;
+		} else if (!citas.equals(other.citas))
 			return false;
 		if (codigo != other.codigo)
 			return false;
@@ -79,6 +149,14 @@ public class Paciente implements Serializable {
 			return false;
 		return true;
 	}
-   
+
+
+
+
+
+
+	
+	
 	
 }
+	

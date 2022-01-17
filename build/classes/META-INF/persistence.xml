@@ -6,6 +6,10 @@
 		<class>ec.edu.ups.entidad.Doctor</class>
 		<class>ec.edu.ups.entidad.Secretaria</class>
 		<class>ec.edu.ups.entidad.Paciente</class>
+		<class>ec.edu.ups.entidad.Especialidad</class>
+		<class>ec.edu.ups.entidad.MedicoEspecialidad</class>
+		<class>ec.edu.ups.entidad.Cita</class>
+		<class>ec.edu.ups.entidad.Historial</class>
 		<properties>
 			<property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
 		</properties>

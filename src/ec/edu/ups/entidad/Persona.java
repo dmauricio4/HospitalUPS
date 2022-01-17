@@ -48,7 +48,6 @@ public class Persona implements Serializable {
 	public Persona( String cedula, String nombres, String apellidos, String direccion, String telefono,
 			String correo, String rol, String password) {
 		super();
-		this.codigo = codigo;
 		this.cedula = cedula;
 		this.nombres = nombres;
 		this.apellidos = apellidos;

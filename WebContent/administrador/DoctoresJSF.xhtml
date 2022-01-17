@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+ <meta http-equiv="refresh" content="#{facesContext.externalContext.sessionMaxInactiveInterval};url=#{request.contextPath}../index.html"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  <link rel="apple-touch-icon"  href="../assets/img/apple-icon.png"/>
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png"/>
+	<title>Doctores</title>
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+  <!-- Nucleo Icons -->
+  <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" ></script>
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <!-- CSS Files -->
+  <link id="pagestyle" href="../assets/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />
+  
+	<style>
+		.tabla {
+			border-collapse: collapse;
+		}
+		
+		.cabeceraTabla {
+			text-align: center;
+			background: none repeat scroll 0 0 #E5E5E5;
+			border-bottom: 1px solid #BBBBBB;
+			padding: 8px;
+		}
+		
+		.filaPar {
+			text-align: center;
+			background: none repeat scroll 0 0 #FFFFFFF;
+			border-top: 1px solid #BBBBBB;
+		}
+		
+		.filaImpar {
+			text-align: center;
+			background: none repeat scroll 0 0 #F9F9F9;
+			border-top: 1px solid #BBBBBB;
+		}
+	</style>
+		<f:event type="preRenderView"
+		listener="#{verificarSesionBean.verificarSession()}" />
+</h:head>
+<h:body  class="g-sidenav-show  bg-gray-200">
+	<h3>Gestión de Doctores</h3>
+    <h1><h:outputText value="Bienvenido #{loginBean.correo}" /></h1>
+	
+	
+	
+    <div class="sidenav-footer position-absolute w-100 bottom-0 ">
+      <div class="mx-3">
+        <a class="btn bg-gradient-primary mt-4 w-100" href="https://www.creative-tim.com/product/material-dashboard-pro?ref=sidebarfree" type="button">Volver a Menu</a>
+      </div>
+    </div>
+	<h:form>
+		<h:dataTable value="#{personaBean.list}" var="c" styleClass="tabla"
+			headerClass="cabeceraTabla" rowClasses="filaPar,filaImpar">
+			<h:column>
+				<f:facet name="header">Codigo</f:facet>#{c.codigo}</h:column>
+			<h:column>
+				<f:facet name="header">Cedula</f:facet>
+				<h:inputText value="#{c.cedula}" size="10"
+					rendered="#{c.editable}" />
+				<h:outputText class="badge badge-sm bg-gradient-success" value="#{c.cedula}" rendered="#{not c.editable}" />
+			</h:column>	
+			<h:column>
+				<f:facet name="header">Nombres</f:facet>
+				<h:inputText value="#{c.nombres}" size="10"
+					rendered="#{c.editable}" />
+				<h:outputText class="badge badge-sm bg-gradient-success" value="#{c.nombres}" rendered="#{not c.editable}" />
+			</h:column>	
+			<h:column>
+				<f:facet name="header">Apellidos</f:facet>
+				<h:inputText value="#{c.apellidos}" size="10"
+					rendered="#{c.editable}" />
+				<h:outputText class="badge badge-sm bg-gradient-success" value="#{c.apellidos}" rendered="#{not c.editable}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Direccion</f:facet>
+				<h:inputText value="#{c.direccion}" size="10"
+					rendered="#{c.editable}" />
+				<h:outputText class="badge badge-sm bg-gradient-success" value="#{c.direccion}" rendered="#{not c.editable}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Telefono</f:facet>
+				<h:inputText value="#{c.telefono}" size="10"
+					rendered="#{c.editable}" />
+				<h:outputText class="badge badge-sm bg-gradient-success" value="#{c.telefono}" rendered="#{not c.editable}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Correo</f:facet>
+				<h:inputText value="#{c.correo}" size="10"
+					rendered="#{c.editable}" />
+				<h:outputText class="badge badge-sm bg-gradient-success" value="#{c.correo}" rendered="#{not c.editable}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Rol</f:facet>
+				<h:selectOneMenu value="#{personaBean.rol}" rendered="#{c.editable}">
+							<f:selectItem itemValue="0" itemLabel="Seleccionar"/>
+							<f:selectItem itemValue="doctor" itemLabel="Doctor"/> 
+							<f:selectItem itemValue="secretaria" itemLabel="Secretaria"/> 
+				</h:selectOneMenu>
+				<h:outputText class="badge badge-sm bg-gradient-success" value="#{c.rol}" rendered="#{not c.editable}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Correo</f:facet>
+				<h:inputText value="#{c.password}" size="10"
+					rendered="#{c.editable}" />
+				<h:outputText class="badge badge-sm bg-gradient-success" value="#{c.password}" rendered="#{not c.editable}" />
+			</h:column>
+							
+			<h:column>
+				<f:facet name="header">Accion</f:facet>
+				<h:commandLink value="Delete" action="#{personaBean.delete(c)}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Accion</f:facet>
+				<h:commandLink value="Edit" action="#{personaBean.edit(c)}"
+					rendered="#{not c.editable}" />
+				<h:commandLink value="Save" action="#{personaBean.save(c)}"
+					rendered="#{c.editable}" />
+			</h:column>
+		</h:dataTable>
+		<ul>
+			<li>Cedula:<h:inputText size="10" value="#{personaBean.cedula}"/></li>
+		</ul>
+		<ul>
+			<li>Nombres:<h:inputText size="10" value="#{personaBean.nombres}"/></li>
+		</ul>
+		<ul>
+			<li>Apellidos:<h:inputText size="10" value="#{personaBean.apellidos}"/></li>
+		</ul>
+		<ul>
+			<li>Direccion:<h:inputText size="10" value="#{personaBean.direccion}"/></li>
+		</ul>
+		<ul>
+			<li>Telefono:<h:inputText size="10" value="#{personaBean.telefono}"/></li>
+		</ul>
+		<ul>
+			<li>Correo:<h:inputText size="10" value="#{personaBean.correo}"/></li>
+		</ul>
+		<ul>
+			<li>Rol: <h:selectOneMenu value="#{personaBean.rol}">
+							<f:selectItem itemValue="0" itemLabel="Seleccionar"/>
+							<f:selectItem itemValue="doctor" itemLabel="Doctor"/> 
+							<f:selectItem itemValue="secretaria" itemLabel="Secretaria"/> 
+				</h:selectOneMenu>
+			</li>
+		</ul>
+		<ul>
+			<li>Password:<h:inputText size="10" value="#{personaBean.password}"/></li>
+		</ul>
+		<h:commandButton value="Add" action="#{personaBean.add}" />
+	</h:form>
+</h:body>
+</html>

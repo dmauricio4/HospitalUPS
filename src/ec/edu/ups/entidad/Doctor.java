@@ -1,6 +1,7 @@
 package ec.edu.ups.entidad;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.inject.Named;
 import javax.persistence.*;
@@ -19,21 +20,53 @@ public class Doctor implements Serializable {
 	@Id
 	@GeneratedValue(strategy= GenerationType.AUTO)
 	private int codigo;
-	private String enfermedad;
+	private String experienciaL;
 	
 	@ManyToOne
 	private Persona doctor;
 	
 	
+	@OneToMany(mappedBy="doctorespecialidad")
+	private List<MedicoEspecialidad> MedicoEspecialidad;
+	
 	public Doctor() {
 	}
 
+ 
 
-	public Doctor(int codigo, String enfermedad) {
+	public Doctor(int codigo, String experienciaL, Persona doctor,
+			List<ec.edu.ups.entidad.MedicoEspecialidad> medicoEspecialidad) {
 		super();
 		this.codigo = codigo;
-		this.enfermedad = enfermedad;
+		this.experienciaL = experienciaL;
+		this.doctor = doctor;
+		MedicoEspecialidad = medicoEspecialidad;
 	}
+
+
+
+	public String getExperienciaL() {
+		return experienciaL;
+	}
+
+
+
+	public void setExperienciaL(String experienciaL) {
+		this.experienciaL = experienciaL;
+	}
+
+
+
+	public List<MedicoEspecialidad> getMedicoEspecialidad() {
+		return MedicoEspecialidad;
+	}
+
+
+
+	public void setMedicoEspecialidad(List<MedicoEspecialidad> medicoEspecialidad) {
+		MedicoEspecialidad = medicoEspecialidad;
+	}
+
 
 
 	public int getCodigo() {
@@ -45,16 +78,7 @@ public class Doctor implements Serializable {
 		this.codigo = codigo;
 	}
 
-
-	public String getEnfermedad() {
-		return enfermedad;
-	}
-
-
-	public void setEnfermedad(String enfermedad) {
-		this.enfermedad = enfermedad;
-	}
-
+ 
 
 	public Persona getDoctor() {
 		return doctor;
@@ -66,21 +90,26 @@ public class Doctor implements Serializable {
 	}
 
 
+
 	@Override
 	public String toString() {
-		return "Doctor [codigo=" + codigo + ", enfermedad=" + enfermedad + ", doctor=" + doctor + "]";
+		return "Doctor [codigo=" + codigo + ", experienciaL=" + experienciaL + ", doctor=" + doctor
+				+ ", MedicoEspecialidad=" + MedicoEspecialidad + "]";
 	}
+
 
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((MedicoEspecialidad == null) ? 0 : MedicoEspecialidad.hashCode());
 		result = prime * result + codigo;
 		result = prime * result + ((doctor == null) ? 0 : doctor.hashCode());
-		result = prime * result + ((enfermedad == null) ? 0 : enfermedad.hashCode());
+		result = prime * result + ((experienciaL == null) ? 0 : experienciaL.hashCode());
 		return result;
 	}
+
 
 
 	@Override
@@ -92,6 +121,11 @@ public class Doctor implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Doctor other = (Doctor) obj;
+		if (MedicoEspecialidad == null) {
+			if (other.MedicoEspecialidad != null)
+				return false;
+		} else if (!MedicoEspecialidad.equals(other.MedicoEspecialidad))
+			return false;
 		if (codigo != other.codigo)
 			return false;
 		if (doctor == null) {
@@ -99,16 +133,15 @@ public class Doctor implements Serializable {
 				return false;
 		} else if (!doctor.equals(other.doctor))
 			return false;
-		if (enfermedad == null) {
-			if (other.enfermedad != null)
+		if (experienciaL == null) {
+			if (other.experienciaL != null)
 				return false;
-		} else if (!enfermedad.equals(other.enfermedad))
+		} else if (!experienciaL.equals(other.experienciaL))
 			return false;
 		return true;
 	}
 
- 
- 
+  
 
  
 	

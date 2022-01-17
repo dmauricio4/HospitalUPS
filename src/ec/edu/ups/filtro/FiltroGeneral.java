@@ -15,14 +15,14 @@ import javax.servlet.http.HttpSession;
  * Servlet Filter implementation class Filtro
  */
 @WebFilter(
-		servletNames = { "CreateUser", "CerrarSesionServlet"})
+		servletNames = { "PersonaBean","Session"})
 public class FiltroGeneral implements Filter {
 	
 	/**
 	 * @see Filter#init(FilterConfig)
 	 */
 	public void init(FilterConfig fConfig) throws ServletException {
-		System.out.println("Filtro General");
+		System.out.println("Filtro General----EN JSF-----------");
 	}
 
 	@Override

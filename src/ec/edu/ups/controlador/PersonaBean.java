@@ -41,8 +41,6 @@ public class PersonaBean implements Serializable {
     
     @PostConstruct
     public void init() {
-	//ejbCategoryFacade.create(new Category("Hola"));
-	//ejbCategoryFacade.create(new Category("1211"));
 	list = ejbCategoryFacade.findAll();
     }
         
@@ -133,10 +131,20 @@ public class PersonaBean implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
 
 	public String add() {
 	ejbCategoryFacade.create(new Persona(this.cedula,this.nombres,this.apellidos,this.direccion,this.telefono,this.correo,this.rol,this.password));
 	list = ejbCategoryFacade.findAll();
+	
+	this.cedula="";
+	this.nombres="";
+	this.apellidos="";
+	this.direccion="";
+	this.telefono="";
+	this.correo="";
+	this.rol="Selecionar";
+	this.password="";
 	return null;
     }
 
