@@ -12,7 +12,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.ServletException;
 
-import com.sun.istack.internal.logging.Logger;
+import com.sun.istack.logging.Logger;
 
 import ec.edu.ups.ejb.PersonaFacade;
 import ec.edu.ups.entidad.Persona;

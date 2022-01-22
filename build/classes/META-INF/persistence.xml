@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
-	<persistence-unit name="HospitalUPS" transaction-type="JTA">
-		<jta-data-source>hospital_jta</jta-data-source>
+<persistence version="2.2"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+	<persistence-unit name="HospitalUPS">
+		
+	<jta-data-source>jdbc/__Hospital</jta-data-source>
 		<class>ec.edu.ups.entidad.Persona</class>
 		<class>ec.edu.ups.entidad.Doctor</class>
 		<class>ec.edu.ups.entidad.Secretaria</class>
@@ -9,9 +13,7 @@
 		<class>ec.edu.ups.entidad.Especialidad</class>
 		<class>ec.edu.ups.entidad.MedicoEspecialidad</class>
 		<class>ec.edu.ups.entidad.Cita</class>
-		<class>ec.edu.ups.entidad.Historial</class>
-		<properties>
-			<property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
-		</properties>
+		<class>ec.edu.ups.entidad.Historial</class>		
+		<class>ec.edu.ups.entidad.Sesion</class>
 	</persistence-unit>
 </persistence>

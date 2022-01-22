@@ -39,6 +39,11 @@ public class Persona implements Serializable {
 	//RELACION ONE MUCHOS persona-paciente
 	@OneToMany(mappedBy ="paciente")
 	private List<Paciente> pacientes;
+	
+
+	@JoinColumn
+	@OneToMany(mappedBy="sesion")
+	private List<Sesion> sesion;
 		
 	
 	public Persona() {
@@ -81,6 +86,11 @@ public class Persona implements Serializable {
 
 	public String getNombres() {
 		return nombres;
+	}
+
+
+	public void setSesion(List<Sesion> sesion) {
+		this.sesion = sesion;
 	}
 
 
@@ -189,11 +199,15 @@ public class Persona implements Serializable {
 	}
 
 
+ 
+	
+
 	@Override
 	public String toString() {
 		return "Persona [codigo=" + codigo + ", cedula=" + cedula + ", nombres=" + nombres + ", apellidos=" + apellidos
 				+ ", direccion=" + direccion + ", telefono=" + telefono + ", correo=" + correo + ", rol=" + rol
-				+ ", password=" + password + ", editable=" + editable + "]";
+				+ ", password=" + password + ", editable=" + editable + ", doctores=" + doctores + ", secretarias="
+				+ secretarias + ", pacientes=" + pacientes + ", sesion=" + sesion + "]";
 	}
 
 

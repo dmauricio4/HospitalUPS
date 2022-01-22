@@ -4,17 +4,19 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Enumeration;
 
+import com.sun.istack.logging.Logger;
 import javax.faces.context.FacesContext;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.servlet.http.HttpSession;
- 
+
 
 @Entity
 public class Sesion implements Serializable {
@@ -27,13 +29,19 @@ public class Sesion implements Serializable {
 	private static Boolean sesionActiva;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date fechaSesion;
-	@OneToOne
+	private Date fechaSesion; 
+
 	@JoinColumn
-	private Persona cliente;
+	@ManyToOne
+	private Persona sesion;
  
 
 	
+	public Sesion() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getCodigoSesion() {
 		return codigoSesion;
 	}
@@ -50,12 +58,14 @@ public class Sesion implements Serializable {
 		this.fechaSesion = fechaSesion;
 	}
 
-	public Persona getCliente() {
-		return cliente;
+ 
+
+	public Persona getSesion() {
+		return sesion;
 	}
 
-	public void setCliente(Persona cliente) {
-		this.cliente = cliente;
+	public void setSesion(Persona sesion) {
+		this.sesion = sesion;
 	}
 
 	public static HttpSession getHttpSession() {
@@ -66,12 +76,12 @@ public class Sesion implements Serializable {
 		Sesion.httpSession = httpSession;
 	}
 
-	public  void iniciarSesion(FacesContext fc) {
+	public static  void iniciarSesion(FacesContext fc) {
 		httpSession = (HttpSession) fc.getExternalContext().getSession(false);
 		System.out.println("Se inicia la sesion-----> " + httpSession);
 	}
 
-	public   void setDatosSesion(String nomObjeto, Object objeto) {
+	public static   void setDatosSesion(String nomObjeto, Object objeto) {
 		try {
 			if (httpSession.getId() != null && !httpSession.getId().isEmpty()) {
 				sesionActiva = true;
@@ -91,8 +101,7 @@ public class Sesion implements Serializable {
 			e.printStackTrace();
 		}
 	}
-
-	public   void cerrarSesion() {
+	public static   void cerrarSesion() {
 		Enumeration<String> atributos = null;
 
 		try {
@@ -126,7 +135,7 @@ public class Sesion implements Serializable {
 		}
 	}
 
-	public   Boolean getEstadoSesion() {
+	public static   Boolean getEstadoSesion() {
 		if (httpSession != null && httpSession.getId() != null && !httpSession.getId().isEmpty()
 				&& httpSession.getAttribute("sesionActiva") != null) {
 			return Boolean.parseBoolean(httpSession.getAttribute("sesionActiva").toString());
@@ -143,4 +152,5 @@ public class Sesion implements Serializable {
 		Sesion.sesionActiva = sesionActiva;
 	}
 
+ 
 }
