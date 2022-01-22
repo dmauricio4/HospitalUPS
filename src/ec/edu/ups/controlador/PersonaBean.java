@@ -9,9 +9,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.annotation.FacesConfig;
 import javax.inject.Named;
 
-import ec.edu.ups.ejb.PersonaFacade;
-import ec.edu.ups.ejb.DoctorFacade;
-import ec.edu.ups.entidad.Doctor; 
+import ec.edu.ups.ejb.PersonaFacade;  
 
 import ec.edu.ups.entidad.Persona; 
 
@@ -134,7 +132,17 @@ public class PersonaBean implements Serializable {
 	
 
 	public String add() {
-	ejbCategoryFacade.create(new Persona(this.cedula,this.nombres,this.apellidos,this.direccion,this.telefono,this.correo,this.rol,this.password));
+		
+	Persona per = new Persona();
+	per.setApellidos(apellidos);
+	per.setCedula(cedula);
+	per.setNombres(nombres);
+	per.setDireccion(direccion);
+	per.setTelefono(telefono);
+	per.setCorreo(correo);
+	per.setRol(rol);
+	per.setPassword(password);	
+	ejbCategoryFacade.create(per);
 	list = ejbCategoryFacade.findAll();
 	
 	this.cedula="";
@@ -145,6 +153,7 @@ public class PersonaBean implements Serializable {
 	this.correo="";
 	this.rol="Selecionar";
 	this.password="";
+	per = new Persona();
 	return null;
     }
 

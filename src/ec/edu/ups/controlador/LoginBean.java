@@ -2,6 +2,7 @@ package ec.edu.ups.controlador;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -25,11 +26,12 @@ import javax.servlet.http.HttpSession;
 import javax.faces.application.ConfigurableNavigationHandler;
 
 import javax.faces.event.ComponentSystemEvent;
-import com.sun.istack.internal.logging.Logger;
-
 import ec.edu.ups.ejb.PersonaFacade;
+import ec.edu.ups.ejb.SessionFacade;
 import ec.edu.ups.entidad.Persona;
 import ec.edu.ups.entidad.Sesion;
+
+import com.sun.istack.logging.Logger;
 
 @FacesConfig(version = FacesConfig.Version.JSF_2_3)
 
@@ -53,6 +55,8 @@ public class LoginBean implements Serializable {
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	private Sesion sesion;
+	@EJB
+	private SessionFacade ejbSesionFacade;
 
 	private int count;
 
@@ -161,82 +165,76 @@ public class LoginBean implements Serializable {
 		this.password = password;
 	}
 
-	
 	public void loginUser() throws ServletException, IOException {
 
 		listpersona = ejbPersonaFacade.findbylogin(this.correo, this.password);
+		
 		String url = null;
 		for (Persona persona : listpersona) {
 			this.correo = persona.getCorreo();
 			this.rol = persona.getRol();
-			System.out.println("-----------login user");
+			System.out.println("-----------login user con rol de >"+persona.getRol());
+
+			addMessage("ERROR", " valores de persona >"+persona.getRol());
+			
+			Sesion se = new Sesion();
+			
+			FacesContext context = FacesContext.getCurrentInstance();
+			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("rol", persona.getRol());
+			FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+			FacesContext.getCurrentInstance().getExternalContext().setSessionMaxInactiveInterval(5);
 
 			
+			se.setSesion(persona);
+			se.setCodigoSesion(ejbSesionFacade.count());
+			se.setFechaSesion(new Date());
+			se.setSesionActiva(true);
+			HttpSession httpSession = (HttpSession) context.getExternalContext().getSession(true);
+
+			se.setHttpSession(httpSession);
+			ejbSesionFacade.create(se);
 
 			if (persona.getRol().equals("doctor")) {
 				try {
-					FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", persona);
+					context.getExternalContext().redirect("/HospitalUPS/doctor/index.html");
 
-					FacesContext contex = FacesContext.getCurrentInstance();
-					contex.getExternalContext()
-							.redirect("/doctor/index.html?faces-redirect=true&cedula=" + persona.getCedula());
- 
 					addMessage("AVISO", "Su cuenta doctor se a creado");
-
 				} catch (Exception e) {
-
 					addMessage("ERROR", " esta con errores");
 				}
 
 			}
 			if (persona.getRol().equals("secretaria")) {
 				try {
-					FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", persona);
-
-					FacesContext contex = FacesContext.getCurrentInstance();
-					contex.getExternalContext()
-							.redirect("/secretaria/index.html?faces-redirect=true&cedula=" + persona.getCedula());
- 
+					context.getExternalContext().redirect("/HospitalUPS/template/templateIndexSecre.xhtml");
 					addMessage("AVISO", "Su cuenta doctor se a creado");
 
 				} catch (Exception e) {
-
 					addMessage("ERROR", " esta con errores");
-				} 
+				}
 			}
 			if (persona.getRol().equals("administrador")) {
-				System.out.println("Se aplica el redicionamiento");
-				try {
-					FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", persona);
+				System.out.println("Se aplica el redicionamiento");				try {
+					context.getExternalContext().redirect("/HospitalUPS/administrador/index.html");
 
-					FacesContext contex = FacesContext.getCurrentInstance();
-					contex.getExternalContext()
-							.redirect("/administrador/DoctoresJSF.xhtml?faces-redirect=true&cedula=" + persona.getCedula());
- 
 					addMessage("AVISO", "Su cuenta doctor se a creado");
-
 				} catch (Exception e) {
 					addMessage("ERROR", " esta con errores");
-				}  
+				}
 			}
 			if (persona.getRol().equals("paciente")) {
-				url = "/paciente/index.html";
+				url = "/HospitalUPS/paciente/index.html";
 			}
-
 			FacesContext.getCurrentInstance().getExternalContext().setSessionMaxInactiveInterval(5);
 			break;
 		}
 	}
 
-	
-	
-	
-	public void cerrarSesion() throws IOException { 
-
+	public void cerrarSesion() throws IOException {
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-
-		FacesContext.getCurrentInstance().getExternalContext().redirect(
-				FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/faces/index.xhtml");
+		FacesContext.getCurrentInstance().getExternalContext()
+				.redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath()
+						+ "/HospitalUPS/index.html");
 
 	}
 

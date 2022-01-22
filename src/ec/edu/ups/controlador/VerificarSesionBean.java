@@ -19,12 +19,16 @@ public class VerificarSesionBean implements Serializable {
 	public void verificarSession() {
 		try {
 			FacesContext context = FacesContext.getCurrentInstance();
-			Persona cliente = (Persona) context.getExternalContext().getSessionMap().get("user");
-            System.out.println("Personaa---:"+cliente);
-			if (cliente == null) {
-				context.getExternalContext().redirect("index.html");
+			//STRING ROL
+			String persona = (String)context.getExternalContext().getSessionMap().get("rol");
+			System.out.println("Se imprime el valor a verificar  > "+persona);
+			
+            System.out.println("Personaa---:"+persona);
+			
+            if (persona == null) {
+				context.getExternalContext().redirect("/HospitalUPS/index.html");
 			}
-
+			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
