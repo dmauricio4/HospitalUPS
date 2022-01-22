@@ -4,8 +4,7 @@ package ec.edu.ups.ejb;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
-import ec.edu.ups.entidad.Secretaria;
+ 
 import ec.edu.ups.entidad.Sesion;
 
 

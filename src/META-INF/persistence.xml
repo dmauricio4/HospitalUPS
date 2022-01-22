@@ -6,14 +6,20 @@
 	<persistence-unit name="HospitalUPS">
 		
 	<jta-data-source>jdbc/__Hospital</jta-data-source>
-		<class>ec.edu.ups.entidad.Persona</class>
-		<class>ec.edu.ups.entidad.Doctor</class>
-		<class>ec.edu.ups.entidad.Secretaria</class>
-		<class>ec.edu.ups.entidad.Paciente</class>
 		<class>ec.edu.ups.entidad.Especialidad</class>
-		<class>ec.edu.ups.entidad.MedicoEspecialidad</class>
 		<class>ec.edu.ups.entidad.Cita</class>
 		<class>ec.edu.ups.entidad.Historial</class>		
 		<class>ec.edu.ups.entidad.Sesion</class>
+			
+		<class>ec.edu.ups.entidad.Persona</class>
+			
+		<class>ec.edu.ups.entidad.Doctor_Especialidad</class>
+		
+		<class>ec.edu.ups.entidad.Factura_Cabecera</class>
+		
+		<class>ec.edu.ups.entidad.Factura_Detalle</class>
+		<properties>
+			<property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+		</properties>
 	</persistence-unit>
 </persistence>

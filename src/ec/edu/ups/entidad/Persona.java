@@ -5,286 +5,139 @@ import javax.persistence.*;
 import java.util.List;
 
 /**
- * Entity implementation class for Entity: Persona
- *
+ * The persistent class for the "Persona" database table.
+ * 
  */
 @Entity
+@Table(name = "\"Persona\"")
+@NamedQuery(name = "Persona.findAll", query = "SELECT p FROM Persona p")
 public class Persona implements Serializable {
-
-	
 	private static final long serialVersionUID = 1L;
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int codigo;
-	private String cedula;
-	private String nombres;
-	private String apellidos;
-	private String direccion;
-	private String telefono;
-	private String correo;
-	private String rol;
-	private String password;
-	@Transient
-	private boolean editable;
-	
-	//RELACION ONE MUCHOS personas-doctores
-	@OneToMany(mappedBy ="doctor")
-	private List<Doctor> doctores;
-	
-	
-	//RELACION ONE MUCHOS persona-secretaria
-	@OneToMany(mappedBy ="secretaria")
-	private List<Secretaria> secretarias;
-		
-	//RELACION ONE MUCHOS persona-paciente
-	@OneToMany(mappedBy ="paciente")
-	private List<Paciente> pacientes;
-	
 
-	@JoinColumn
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "codigo")
+	private Integer idPersona;
+
+	private String apellidos;
+
+	private String cedula;
+
+	private String correo;
+
+	private String direccion;
+
+	private String nombres;
+
+	private String password;
+
+	private String rol;
+
+	private String telefono;
+
+	private String estado;
+
+	private Boolean editable;
+	
 	@OneToMany(mappedBy="sesion")
 	private List<Sesion> sesion;
-		
-	
+
 	public Persona() {
 	}
 
-
-	public Persona( String cedula, String nombres, String apellidos, String direccion, String telefono,
-			String correo, String rol, String password) {
-		super();
-		this.cedula = cedula;
-		this.nombres = nombres;
-		this.apellidos = apellidos;
-		this.direccion = direccion;
-		this.telefono = telefono;
-		this.correo = correo;
-		this.rol = rol;
-		this.password = password;
+	public Boolean getEditable() {
+		return editable;
 	}
 
-
-	public int getCodigo() {
-		return codigo;
+	public void setEditable(Boolean editable) {
+		this.editable = editable;
 	}
 
-
-	public void setCodigo(int codigo) {
-		this.codigo = codigo;
+	public Integer getIdPersona() {
+		return this.idPersona;
 	}
 
-
-	public String getCedula() {
-		return cedula;
+	public void setIdPersona(Integer idPersona) {
+		this.idPersona = idPersona;
 	}
-
-
-	public void setCedula(String cedula) {
-		this.cedula = cedula;
-	}
-
-
-	public String getNombres() {
-		return nombres;
-	}
-
-
-	public void setSesion(List<Sesion> sesion) {
-		this.sesion = sesion;
-	}
-
-
-	public void setNombres(String nombres) {
-		this.nombres = nombres;
-	}
-
 
 	public String getApellidos() {
-		return apellidos;
+		return this.apellidos;
 	}
-
 
 	public void setApellidos(String apellidos) {
 		this.apellidos = apellidos;
 	}
 
-
-	public String getDireccion() {
-		return direccion;
+	public String getCedula() {
+		return this.cedula;
 	}
 
-
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
+	public void setCedula(String cedula) {
+		this.cedula = cedula;
 	}
-
-
-	public String getTelefono() {
-		return telefono;
-	}
-
-
-	public void setTelefono(String telefono) {
-		this.telefono = telefono;
-	}
-
 
 	public String getCorreo() {
-		return correo;
+		return this.correo;
 	}
-
 
 	public void setCorreo(String correo) {
 		this.correo = correo;
 	}
 
-
-	public String getRol() {
-		return rol;
+	public String getDireccion() {
+		return this.direccion;
 	}
 
-
-	public void setRol(String rol) {
-		this.rol = rol;
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
 	}
 
+	public String getNombres() {
+		return this.nombres;
+	}
+
+	public void setNombres(String nombres) {
+		this.nombres = nombres;
+	}
 
 	public String getPassword() {
-		return password;
+		return this.password;
 	}
-
 
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
-
-	public boolean isEditable() {
-		return editable;
+	public String getRol() {
+		return this.rol;
 	}
 
-
-	public void setEditable(boolean editable) {
-		this.editable = editable;
+	public void setRol(String rol) {
+		this.rol = rol;
 	}
 
-
-	public List<Doctor> getDoctores() {
-		return doctores;
+	public String getTelefono() {
+		return this.telefono;
 	}
 
-
-	public void setDoctores(List<Doctor> doctores) {
-		this.doctores = doctores;
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
 	}
 
-
-	public List<Secretaria> getSecretarias() {
-		return secretarias;
+	public String getEstado() {
+		return estado;
 	}
 
-
-	public void setSecretarias(List<Secretaria> secretarias) {
-		this.secretarias = secretarias;
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
-
-
-	public List<Paciente> getPacientes() {
-		return pacientes;
-	}
-
-
-	public void setPacientes(List<Paciente> pacientes) {
-		this.pacientes = pacientes;
-	}
-
-
- 
-	
 
 	@Override
 	public String toString() {
-		return "Persona [codigo=" + codigo + ", cedula=" + cedula + ", nombres=" + nombres + ", apellidos=" + apellidos
-				+ ", direccion=" + direccion + ", telefono=" + telefono + ", correo=" + correo + ", rol=" + rol
-				+ ", password=" + password + ", editable=" + editable + ", doctores=" + doctores + ", secretarias="
-				+ secretarias + ", pacientes=" + pacientes + ", sesion=" + sesion + "]";
+		return "Persona [idPersona=" + idPersona + ", apellidos=" + apellidos + ", cedula=" + cedula + ", correo="
+				+ correo + ", direccion=" + direccion + ", nombres=" + nombres + ", password=" + password + ", rol="
+				+ rol + ", telefono=" + telefono + ", estado=" + estado + "]";
 	}
 
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((apellidos == null) ? 0 : apellidos.hashCode());
-		result = prime * result + ((cedula == null) ? 0 : cedula.hashCode());
-		result = prime * result + codigo;
-		result = prime * result + ((correo == null) ? 0 : correo.hashCode());
-		result = prime * result + ((direccion == null) ? 0 : direccion.hashCode());
-		result = prime * result + (editable ? 1231 : 1237);
-		result = prime * result + ((nombres == null) ? 0 : nombres.hashCode());
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + ((rol == null) ? 0 : rol.hashCode());
-		result = prime * result + ((telefono == null) ? 0 : telefono.hashCode());
-		return result;
-	}
-
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Persona other = (Persona) obj;
-		if (apellidos == null) {
-			if (other.apellidos != null)
-				return false;
-		} else if (!apellidos.equals(other.apellidos))
-			return false;
-		if (cedula == null) {
-			if (other.cedula != null)
-				return false;
-		} else if (!cedula.equals(other.cedula))
-			return false;
-		if (codigo != other.codigo)
-			return false;
-		if (correo == null) {
-			if (other.correo != null)
-				return false;
-		} else if (!correo.equals(other.correo))
-			return false;
-		if (direccion == null) {
-			if (other.direccion != null)
-				return false;
-		} else if (!direccion.equals(other.direccion))
-			return false;
-		if (editable != other.editable)
-			return false;
-		if (nombres == null) {
-			if (other.nombres != null)
-				return false;
-		} else if (!nombres.equals(other.nombres))
-			return false;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
-			return false;
-		if (rol == null) {
-			if (other.rol != null)
-				return false;
-		} else if (!rol.equals(other.rol))
-			return false;
-		if (telefono == null) {
-			if (other.telefono != null)
-				return false;
-		} else if (!telefono.equals(other.telefono))
-			return false;
-		return true;
-	}
-
-
-	
 }

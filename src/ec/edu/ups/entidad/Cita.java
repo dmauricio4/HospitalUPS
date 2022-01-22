@@ -1,284 +1,128 @@
 package ec.edu.ups.entidad;
 
 import java.io.Serializable;
-import java.sql.Date;
-
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.Date;
+
 
 /**
- * Entity implementation class for Entity: Citas
- *
+ * The persistent class for the "Cita" database table.
+ * 
  */
 @Entity
+@Table(name="\"Cita\"")
+@NamedQuery(name="Cita.findAll", query="SELECT c FROM Cita c")
 public class Cita implements Serializable {
-
-	
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	private int codigo;
-	
-	@ManyToOne
-	private Paciente pacienteCita;
-	
-	@OneToOne
-	private MedicoEspecialidad medicoEspecialidad;
-	
-	@ManyToOne
-	private Historial historialCita;
-	
-	private Date fechaCita;
-	
-	private String sintomas;
-	
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id_cita")
+	private Integer idCita;
+
+	@Column(name="comentario_cita")
+	private String comentarioCita;
+
+	private BigDecimal costo;
+
+	@Column(name="estado_cita")
 	private String estadoCita;
-	
-	private String observacionCita;
-	
-	private Double costoCita;
-	
-	
-		
+
+	@Temporal(TemporalType.DATE)
+	@Column(name="fecha_cita")
+	private Date fechaCita;
+
+	private String sintomatologia;
+
+	//bi-directional many-to-one association to Doctor_Especialidad
+	@ManyToOne
+	@JoinColumn(name="id_medico_especialidad")
+	private Persona doctorEspecialidad;
+
+	//bi-directional many-to-one association to Persona
+	@ManyToOne
+	@JoinColumn(name="id_paciente")
+	private Persona pacientePersona;
+
 
 	public Cita() {
-		super();
 	}
 
-
-
-
-	public Cita(int codigo, Paciente pacienteCita, MedicoEspecialidad medicoEspecialidad, Historial historialCita,
-			Date fechaCita, String sintomas, String estadoCita, String observacionCita, Double costoCita) {
+	public Cita(String comentarioCita, BigDecimal costo, String estadoCita, Date fechaCita, String sintomatologia,
+			Persona doctorEspecialidad, Persona pacientePersona) {
 		super();
-		this.codigo = codigo;
-		this.pacienteCita = pacienteCita;
-		this.medicoEspecialidad = medicoEspecialidad;
-		this.historialCita = historialCita;
-		this.fechaCita = fechaCita;
-		this.sintomas = sintomas;
+		this.comentarioCita = comentarioCita;
+		this.costo = costo;
 		this.estadoCita = estadoCita;
-		this.observacionCita = observacionCita;
-		this.costoCita = costoCita;
-	}
-
-
-
-
-	public int getCodigo() {
-		return codigo;
-	}
-
-
-
-
-	public void setCodigo(int codigo) {
-		this.codigo = codigo;
-	}
-
-
-
-
-	public Paciente getPacienteCita() {
-		return pacienteCita;
-	}
-
-
-
-
-	public void setPacienteCita(Paciente pacienteCita) {
-		this.pacienteCita = pacienteCita;
-	}
-
-
-
-
-	public MedicoEspecialidad getMedicoEspecialidad() {
-		return medicoEspecialidad;
-	}
-
-
-
-
-	public void setMedicoEspecialidad(MedicoEspecialidad medicoEspecialidad) {
-		this.medicoEspecialidad = medicoEspecialidad;
-	}
-
-
-
-
-	public Historial getHistorialCita() {
-		return historialCita;
-	}
-
-
-
-
-	public void setHistorialCita(Historial historialCita) {
-		this.historialCita = historialCita;
-	}
-
-
-
-
-	public Date getFechaCita() {
-		return fechaCita;
-	}
-
-
-
-
-	public void setFechaCita(Date fechaCita) {
 		this.fechaCita = fechaCita;
+		this.sintomatologia = sintomatologia;
+		this.doctorEspecialidad = doctorEspecialidad;
+		this.pacientePersona = pacientePersona;
 	}
 
-
-
-
-	public String getSintomas() {
-		return sintomas;
+	public Integer getIdCita() {
+		return this.idCita;
 	}
 
-
-
-
-	public void setSintomas(String sintomas) {
-		this.sintomas = sintomas;
+	public void setIdCita(Integer idCita) {
+		this.idCita = idCita;
 	}
 
+	public String getComentarioCita() {
+		return this.comentarioCita;
+	}
 
+	public void setComentarioCita(String comentarioCita) {
+		this.comentarioCita = comentarioCita;
+	}
 
+	public BigDecimal getCosto() {
+		return this.costo;
+	}
+
+	public void setCosto(BigDecimal costo) {
+		this.costo = costo;
+	}
 
 	public String getEstadoCita() {
-		return estadoCita;
+		return this.estadoCita;
 	}
-
-
-
 
 	public void setEstadoCita(String estadoCita) {
 		this.estadoCita = estadoCita;
 	}
 
-
-
-
-	public String getObservacionCita() {
-		return observacionCita;
+	public Date getFechaCita() {
+		return this.fechaCita;
 	}
 
-
-
-
-	public void setObservacionCita(String observacionCita) {
-		this.observacionCita = observacionCita;
+	public void setFechaCita(Date fechaCita) {
+		this.fechaCita = fechaCita;
 	}
 
-
-
-
-	public Double getCostoCita() {
-		return costoCita;
+	public String getSintomatologia() {
+		return this.sintomatologia;
 	}
 
-
-
-
-	public void setCostoCita(Double costoCita) {
-		this.costoCita = costoCita;
+	public void setSintomatologia(String sintomatologia) {
+		this.sintomatologia = sintomatologia;
 	}
 
+	public Persona getDoctorEspecialidad() {
+		return this.doctorEspecialidad;
+	}
 
-
+	public void setDoctorEspecialidad(Persona doctorEspecialidad) {
+		this.doctorEspecialidad = doctorEspecialidad;
+	}
 
 	@Override
 	public String toString() {
-		return "Cita [codigo=" + codigo + ", pacienteCita=" + pacienteCita + ", medicoEspecialidad="
-				+ medicoEspecialidad + ", historialCita=" + historialCita + ", fechaCita=" + fechaCita + ", sintomas="
-				+ sintomas + ", estadoCita=" + estadoCita + ", observacionCita=" + observacionCita + ", costoCita="
-				+ costoCita + "]";
+		return "Cita [idCita=" + idCita + ", comentarioCita=" + comentarioCita + ", costo=" + costo + ", estadoCita="
+				+ estadoCita + ", fechaCita=" + fechaCita + ", sintomatologia=" + sintomatologia
+				+ ", doctorEspecialidad=" + doctorEspecialidad + ", pacientePersona=" + pacientePersona + "]";
 	}
 
-
-
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + codigo;
-		result = prime * result + ((costoCita == null) ? 0 : costoCita.hashCode());
-		result = prime * result + ((estadoCita == null) ? 0 : estadoCita.hashCode());
-		result = prime * result + ((fechaCita == null) ? 0 : fechaCita.hashCode());
-		result = prime * result + ((historialCita == null) ? 0 : historialCita.hashCode());
-		result = prime * result + ((medicoEspecialidad == null) ? 0 : medicoEspecialidad.hashCode());
-		result = prime * result + ((observacionCita == null) ? 0 : observacionCita.hashCode());
-		result = prime * result + ((pacienteCita == null) ? 0 : pacienteCita.hashCode());
-		result = prime * result + ((sintomas == null) ? 0 : sintomas.hashCode());
-		return result;
-	}
-
-
-
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Cita other = (Cita) obj;
-		if (codigo != other.codigo)
-			return false;
-		if (costoCita == null) {
-			if (other.costoCita != null)
-				return false;
-		} else if (!costoCita.equals(other.costoCita))
-			return false;
-		if (estadoCita == null) {
-			if (other.estadoCita != null)
-				return false;
-		} else if (!estadoCita.equals(other.estadoCita))
-			return false;
-		if (fechaCita == null) {
-			if (other.fechaCita != null)
-				return false;
-		} else if (!fechaCita.equals(other.fechaCita))
-			return false;
-		if (historialCita == null) {
-			if (other.historialCita != null)
-				return false;
-		} else if (!historialCita.equals(other.historialCita))
-			return false;
-		if (medicoEspecialidad == null) {
-			if (other.medicoEspecialidad != null)
-				return false;
-		} else if (!medicoEspecialidad.equals(other.medicoEspecialidad))
-			return false;
-		if (observacionCita == null) {
-			if (other.observacionCita != null)
-				return false;
-		} else if (!observacionCita.equals(other.observacionCita))
-			return false;
-		if (pacienteCita == null) {
-			if (other.pacienteCita != null)
-				return false;
-		} else if (!pacienteCita.equals(other.pacienteCita))
-			return false;
-		if (sintomas == null) {
-			if (other.sintomas != null)
-				return false;
-		} else if (!sintomas.equals(other.sintomas))
-			return false;
-		return true;
-	}
 	
-	
-	
-	
-	
-	
-	
-   
 }

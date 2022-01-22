@@ -1,96 +1,66 @@
 package ec.edu.ups.entidad;
 
 import java.io.Serializable;
-import java.util.List;
-
 import javax.persistence.*;
 
+
 /**
- * Entity implementation class for Entity: Historial
- *
+ * The persistent class for the "Historial" database table.
+ * 
  */
 @Entity
-
+@Table(name="\"Historial\"")
+@NamedQuery(name="Historial.findAll", query="SELECT h FROM Historial h")
 public class Historial implements Serializable {
-
-	
 	private static final long serialVersionUID = 1L;
+
 	@Id
-	private int codigo;
-	
-	@OneToMany(mappedBy="historialCita")
-	private List<Cita> citas;
-	
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id_historial")
+	private Integer idHistorial;
+
+	private String orden;
+
+	private String receta;
+
+	//bi-directional many-to-one association to Cita
+	@ManyToOne
+	@JoinColumn(name="id_cita")
+	private Cita cita;
 
 	public Historial() {
-		super();
 	}
 
-
-	public Historial(int codigo, List<Cita> citas) {
-		super();
-		this.codigo = codigo;
-		this.citas = citas;
+	public Integer getIdHistorial() {
+		return this.idHistorial;
 	}
 
-
-	public int getCodigo() {
-		return codigo;
+	public void setIdHistorial(Integer idHistorial) {
+		this.idHistorial = idHistorial;
 	}
 
-
-	public void setCodigo(int codigo) {
-		this.codigo = codigo;
+	public String getOrden() {
+		return this.orden;
 	}
 
-
-	public List<Cita> getCitas() {
-		return citas;
+	public void setOrden(String orden) {
+		this.orden = orden;
 	}
 
-
-	public void setCitas(List<Cita> citas) {
-		this.citas = citas;
+	public String getReceta() {
+		return this.receta;
 	}
 
-
-	@Override
-	public String toString() {
-		return "Historial [codigo=" + codigo + ", citas=" + citas + "]";
+	public void setReceta(String receta) {
+		this.receta = receta;
 	}
 
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((citas == null) ? 0 : citas.hashCode());
-		result = prime * result + codigo;
-		return result;
+	public Cita getCita() {
+		return this.cita;
 	}
 
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Historial other = (Historial) obj;
-		if (citas == null) {
-			if (other.citas != null)
-				return false;
-		} else if (!citas.equals(other.citas))
-			return false;
-		if (codigo != other.codigo)
-			return false;
-		return true;
+	public void setCita(Cita cita) {
+		this.cita = cita;
 	}
-	
-	
-	
-   
-	
+
 }
