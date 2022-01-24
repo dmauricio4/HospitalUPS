@@ -33,12 +33,12 @@ import ec.edu.ups.entidad.Sesion;
 
 import com.sun.istack.logging.Logger;
 
-@FacesConfig(version = FacesConfig.Version.JSF_2_3)
+//@FacesConfig(version = FacesConfig.Version.JSF_2_3)
 
-@Named
 @ManagedBean
 @SessionScoped
 public class LoginBean implements Serializable {
+	
 
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = Logger.getLogger(LoginBean.class);
@@ -58,6 +58,8 @@ public class LoginBean implements Serializable {
 	@EJB
 	private SessionFacade ejbSesionFacade;
 
+	
+	
 	private int count;
 
 	public LoginBean() {
@@ -165,9 +167,13 @@ public class LoginBean implements Serializable {
 		this.password = password;
 	}
 
-	public void loginUser() throws ServletException, IOException {
+	public void loginUser()  {
 
 		listpersona = ejbPersonaFacade.findbylogin(this.correo, this.password);
+
+		
+		
+		
 		
 		String url = null;
 		for (Persona persona : listpersona) {
@@ -176,21 +182,35 @@ public class LoginBean implements Serializable {
 			System.out.println("-----------login user con rol de >"+persona.getRol());
 
 			addMessage("ERROR", " valores de persona >"+persona.getRol());
-			
-			Sesion se = new Sesion();
-			
 			FacesContext context = FacesContext.getCurrentInstance();
-			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("rol", persona.getRol());
-			FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-			FacesContext.getCurrentInstance().getExternalContext().setSessionMaxInactiveInterval(5);
-
 			
+			HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+			
+			
+
+			try {
+				request.login(correo, password);
+			} catch (ServletException e) {
+				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login failed!", null));
+				//return "signin";
+			} 
+			
+		
+			//request.getSessionMap().put("rol", persona.getRol());
+			request.setAttribute("user", persona);
+			
+			
+			
+			context.getExternalContext().getSessionMap().put("rol", persona);
+			context.getExternalContext().getSession(true);
+			context.getExternalContext().setSessionMaxInactiveInterval(5);
+
+			Sesion se = new Sesion();
 			se.setSesion(persona);
 			se.setCodigoSesion(ejbSesionFacade.count());
 			se.setFechaSesion(new Date());
 			se.setSesionActiva(true);
 			HttpSession httpSession = (HttpSession) context.getExternalContext().getSession(true);
-
 			se.setHttpSession(httpSession);
 			ejbSesionFacade.create(se);
 
@@ -229,6 +249,28 @@ public class LoginBean implements Serializable {
 			break;
 		}
 	}
+	
+	
+	public void verificarSession() {
+		try {
+			FacesContext context = FacesContext.getCurrentInstance();
+			//STRING ROL
+			String persona = (String)context.getExternalContext().getSessionMap().get("rol");
+			System.out.println("Se imprime el valor a verificar  > "+persona);
+			
+            System.out.println("Personaa---:"+persona);
+			
+            if (persona == null) {
+				context.getExternalContext().redirect("/HospitalUPS/index.html");
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
+	}
+
+	
 
 	public void cerrarSesion() throws IOException {
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();

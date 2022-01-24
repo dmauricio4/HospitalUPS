@@ -18,8 +18,5 @@
 		<class>ec.edu.ups.entidad.Factura_Cabecera</class>
 		
 		<class>ec.edu.ups.entidad.Factura_Detalle</class>
-		<properties>
-			<property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
-		</properties>
 	</persistence-unit>
 </persistence>
