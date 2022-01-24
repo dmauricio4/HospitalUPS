@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"ec.edu.ups.controlador"},{"l":"ec.edu.ups.ejb"},{"l":"ec.edu.ups.entidad"},{"l":"ec.edu.ups.utils"}];updateSearchResults();
