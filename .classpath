@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+	<classpathentry including="**/*.java" kind="src" output="target/classes" path="src">
 		<attributes>
-			<attribute name="module" value="true"/>
-			<attribute name="owner.project.facets" value="java"/>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.glassfish.tools.lib.system">
@@ -12,7 +16,6 @@
 			<attribute name="owner.project.facets" value="jst.web"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="C:/Users/kelvin/Downloads/APLICACIONESDISTRIBUIDAS/java-dotenv-5.2.2.jar"/>
 	<classpathentry kind="lib" path="C:/Users/kelvin/Downloads/APLICACIONESDISTRIBUIDAS/javax.ejb.jar"/>
 	<classpathentry kind="lib" path="C:/Users/kelvin/Downloads/APLICACIONESDISTRIBUIDAS/javax.persistence.jar"/>
@@ -21,7 +24,6 @@
 	<classpathentry kind="lib" path="C:/Users/kelvin/Downloads/APLICACIONESDISTRIBUIDAS/javax.inject-1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/kelvin/Downloads/APLICACIONESDISTRIBUIDAS/javax.faces.jar"/>
 	<classpathentry kind="lib" path="C:/Users/kelvin/Downloads/APLICACIONESDISTRIBUIDAS/librerias/javax.mail.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="lib" path="C:/Users/kelvin/Downloads/APLICACIONESDISTRIBUIDAS/librerias/javax.annotation-api.jar"/>
 	<classpathentry kind="lib" path="C:/Users/kelvin/Downloads/APLICACIONESDISTRIBUIDAS/librerias/javax.batch-api.jar"/>
 	<classpathentry kind="lib" path="C:/Users/kelvin/Downloads/APLICACIONESDISTRIBUIDAS/librerias/javax.ejb-api.jar"/>
@@ -345,5 +347,11 @@
 	<classpathentry kind="lib" path="C:/glassfish5/glassfish/modules/yasson.jar"/>
 	<classpathentry kind="lib" path="C:/glassfish5/glassfish/modules/yasson-1.0.3.jar"/>
 	<classpathentry kind="lib" path="C:/glassfish5/glassfish/modules/istack-commons-runtime-2.13.jar"/>
-	<classpathentry kind="output" path="build/classes"/>
+	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="target/classes"/>
 </classpath>
