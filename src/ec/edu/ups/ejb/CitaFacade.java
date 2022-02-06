@@ -26,8 +26,27 @@ public class CitaFacade extends AbstractFacade<Cita> {
 		return entityManager;
 	}
 	
+	public List<Cita> getCitaEsperaID(Integer id) {
+		String query = "SELECT c FROM public.\"Cita\" c WHERE c.estado_cita ='ESPERA' and c.id_medico_especialidad = :id";
+		List<Cita> citas = new ArrayList<Cita>();
+		
+		try {
+			citas = (List<Cita>) entityManager.createQuery(query)
+											 .setParameter("id", id)
+											 .getResultList();
+			
+			
+		} catch (Exception e) {
+			System.out.println("--> ERROR Cita.getCitasbyEstado" + e.getMessage());
+		}
+		return citas;
+	}
+	
+	
+	
+	
 	public List<Cita> getCitasbyEstado(String estado) {
-		String query = "SELECT c FROM Cita c WHERE c.estadoCita = :estado";
+		String query = "SELECT c FROM Cita c WHERE c.estado_cita = :estado";
 		List<Cita> citas = new ArrayList<Cita>();
 		
 		try {
@@ -43,7 +62,7 @@ public class CitaFacade extends AbstractFacade<Cita> {
 	}
 	
 	public List<Cita> getCitasbyDate(Date fecha) {
-		String query = "SELECT c FROM Cita c WHERE c.fechaCita = :fecha";
+		String query = "SELECT c FROM Cita c WHERE c.fecha_cita = :fecha";
 		List<Cita> citas = new ArrayList<Cita>();
 		
 		try {

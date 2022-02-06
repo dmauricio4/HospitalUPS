@@ -33,7 +33,7 @@ import ec.edu.ups.entidad.Sesion;
 
 import com.sun.istack.logging.Logger;
 
-//@FacesConfig(version = FacesConfig.Version.JSF_2_3)
+@FacesConfig(version = FacesConfig.Version.JSF_2_3)
 
 @ManagedBean
 @SessionScoped
@@ -55,6 +55,7 @@ public class LoginBean implements Serializable {
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	private Sesion sesion;
+	private Integer id_persona;
 	@EJB
 	private SessionFacade ejbSesionFacade;
 
@@ -80,6 +81,31 @@ public class LoginBean implements Serializable {
 
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail));
+	}
+	
+	
+	public Sesion getSesion() {
+		return sesion;
+	}
+
+	public void setSesion(Sesion sesion) {
+		this.sesion = sesion;
+	}
+
+	public Integer getId_persona() {
+		return id_persona;
+	}
+
+	public void setId_persona(Integer id_persona) {
+		this.id_persona = id_persona;
+	}
+
+	public SessionFacade getEjbSesionFacade() {
+		return ejbSesionFacade;
+	}
+
+	public void setEjbSesionFacade(SessionFacade ejbSesionFacade) {
+		this.ejbSesionFacade = ejbSesionFacade;
 	}
 
 	public static long getSerialversionuid() {
@@ -177,17 +203,13 @@ public class LoginBean implements Serializable {
 		
 		String url = null;
 		for (Persona persona : listpersona) {
+			this.id_persona= persona.getIdPersona();
 			this.correo = persona.getCorreo();
-			this.rol = persona.getRol();
-			System.out.println("-----------login user con rol de >"+persona.getRol());
-
+			this.rol = persona.getRol(); 
 			addMessage("ERROR", " valores de persona >"+persona.getRol());
-			FacesContext context = FacesContext.getCurrentInstance();
+			FacesContext context = FacesContext.getCurrentInstance();			
+			HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();		
 			
-			HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-			
-			
-
 			try {
 				request.login(correo, password);
 			} catch (ServletException e) {
@@ -195,28 +217,31 @@ public class LoginBean implements Serializable {
 				//return "signin";
 			} 
 			
-		
-			//request.getSessionMap().put("rol", persona.getRol());
-			request.setAttribute("user", persona);
-			
-			
-			
-			context.getExternalContext().getSessionMap().put("rol", persona);
-			context.getExternalContext().getSession(true);
-			context.getExternalContext().setSessionMaxInactiveInterval(5);
-
-			Sesion se = new Sesion();
-			se.setSesion(persona);
-			se.setCodigoSesion(ejbSesionFacade.count());
-			se.setFechaSesion(new Date());
-			se.setSesionActiva(true);
-			HttpSession httpSession = (HttpSession) context.getExternalContext().getSession(true);
-			se.setHttpSession(httpSession);
-			ejbSesionFacade.create(se);
 
 			if (persona.getRol().equals("doctor")) {
 				try {
-					context.getExternalContext().redirect("/HospitalUPS/doctor/index.html");
+
+					
+					
+					//request.getSessionMap().put("rol", persona.getRol());
+					
+					request.setAttribute("user", persona);		
+					
+					context.getExternalContext().getSessionMap().put("rol", persona);
+					context.getExternalContext().getSession(true);
+					context.getExternalContext().setSessionMaxInactiveInterval(5);
+					
+					//SE APLICA LA CREACION DE SESION
+					Sesion se = new Sesion();
+					se.setSesion(persona);
+					se.setCodigoSesion(ejbSesionFacade.count());
+					se.setFechaSesion(new Date());
+					se.setSesionActiva(true);
+					HttpSession httpSession = (HttpSession) context.getExternalContext().getSession(true);
+					se.setHttpSession(httpSession);
+					ejbSesionFacade.create(se);
+					
+					context.getExternalContext().redirect("/HospitalUPS/doctor/templateDoctor.xhtml");
 
 					addMessage("AVISO", "Su cuenta doctor se a creado");
 				} catch (Exception e) {
@@ -226,7 +251,7 @@ public class LoginBean implements Serializable {
 			}
 			if (persona.getRol().equals("secretaria")) {
 				try {
-					context.getExternalContext().redirect("/HospitalUPS/template/templateIndexSecre.xhtml");
+					context.getExternalContext().redirect("/HospitalUPS/template/error.html");
 					addMessage("AVISO", "Su cuenta doctor se a creado");
 
 				} catch (Exception e) {
@@ -235,7 +260,7 @@ public class LoginBean implements Serializable {
 			}
 			if (persona.getRol().equals("administrador")) {
 				System.out.println("Se aplica el redicionamiento");				try {
-					context.getExternalContext().redirect("/HospitalUPS/administrador/index.html");
+					context.getExternalContext().redirect("/HospitalUPS/administrador/error.html");
 
 					addMessage("AVISO", "Su cuenta doctor se a creado");
 				} catch (Exception e) {

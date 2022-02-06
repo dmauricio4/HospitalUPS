@@ -47,7 +47,7 @@
 		}
 	</style>
 		<f:event type="preRenderView"
-		listener="#{verificarSesionBean.verificarSession()}" /> 
+		listener="#{verificarSesionBean.verificarSessionDoc()}" /> 
 </h:head>
 <h:body  class="g-sidenav-show  bg-gray-200">
 	<h3>Gestión de Doctores</h3>
@@ -64,7 +64,7 @@
 		<h:dataTable value="#{personaBean.list}" var="c" styleClass="tabla"
 			headerClass="cabeceraTabla" rowClasses="filaPar,filaImpar">
 			<h:column>
-				<f:facet name="header">Codigo</f:facet>#{c.codigo}</h:column>
+				<f:facet name="header">Codigo</f:facet>#{c.id_persona}</h:column>
 			<h:column>
 				<f:facet name="header">Cedula</f:facet>
 				<h:inputText value="#{c.cedula}" size="10"
