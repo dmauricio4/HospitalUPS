@@ -15,8 +15,9 @@ public class Persona implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "codigo")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	
+	@Column(name = "id_persona")
 	private Integer idPersona;
 
 	private String apellidos;
@@ -36,7 +37,7 @@ public class Persona implements Serializable {
 	private String telefono;
 
 	private String estado;
-
+	@Transient
 	private Boolean editable;
 	
 	@OneToMany(mappedBy="sesion")

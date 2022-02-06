@@ -19,56 +19,29 @@ import ec.edu.ups.entidad.Persona;
 @ViewScoped
 public class VerificarSesionBean implements Serializable {
 	
-	public void verificarSessionSecre() {
-		try {
-			FacesContext context = FacesContext.getCurrentInstance();
-
-			HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();  
-			//STRING ROL
-			Persona persona = (Persona)context.getExternalContext().getSessionMap().get("rol");
-			System.out.println("Se imprime el valor a verificar  > "+persona);
-			
-            System.out.println("Personaa---:"+persona);
-			
-            
-            ExternalContext extContext = FacesContext.getCurrentInstance().getExternalContext();
-            
-            
-            FacesContext contextf = FacesContext.getCurrentInstance();
-    		HttpServletRequest requestf = (HttpServletRequest) context.getExternalContext().getRequest();
-
-            if(requestf.getAttribute("user").equals("secretaria")|| persona.getRol().equalsIgnoreCase("secretaria")) {
-            	System.out.println("El Usuario doctor esta logeado");
-            }else {
-				context.getExternalContext().redirect("/HospitalUPS/index.html");
-
-            	
-            } 
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-
-	}
-
+	 
 	public void verificarSessionDoc() {
+		FacesContext context = FacesContext.getCurrentInstance(); 
+		
+		Persona persona = (Persona)context.getExternalContext().getSessionMap().get("rol"); 
+		
+		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();  		       
+        Persona persona2 = (Persona) request.getAttribute("user");
+        
+		
+        ExternalContext extContext = FacesContext.getCurrentInstance().getExternalContext();  
+
+		Persona persona3 = (Persona)extContext.getSessionMap().get("rol"); 
+
 		try {
-			FacesContext context = FacesContext.getCurrentInstance();
 
-			HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();  
-			//STRING ROL
-			Persona persona = (Persona)context.getExternalContext().getSessionMap().get("rol");
-			System.out.println("Se imprime el valor a verificar  > "+persona);
+			//context.getExternalContext().redirect("/HospitalUPS/index.html");
 			
-            System.out.println("Personaa---:"+persona);
-			
+			//persona3.getRol().equalsIgnoreCase("doctor")||persona2.getRol().equalsIgnoreCase("doctor")||
             
-            ExternalContext extContext = FacesContext.getCurrentInstance().getExternalContext();
-            
-            
-            FacesContext contextf = FacesContext.getCurrentInstance();
-    		HttpServletRequest requestf = (HttpServletRequest) context.getExternalContext().getRequest();
+            if(persona3.getRol().equalsIgnoreCase("doctor")&&persona2.getRol().equalsIgnoreCase("doctor") && persona.getRol()=="doctor") {
 
-            if(requestf.getAttribute("user").equals("doctor")|| persona.getRol().equalsIgnoreCase("doctor")) {
+				context.getExternalContext().redirect("/HospitalUPS/doctor/templateDoctor.xhtml");
             	System.out.println("El Usuario doctor esta logeado");
             }else {
 				context.getExternalContext().redirect("/HospitalUPS/index.html");

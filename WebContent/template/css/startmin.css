@@ -62,7 +62,7 @@ body {
 
 .navbar-top-links>li>a:hover, .navbar-top-links>li>a:focus, .navbar-top-links>.open>a, .navbar-top-links>.open>a:hover, .navbar-top-links>.open>a:focus {
     color: #fff;
-    background-color: #222;
+    background-color: rgb(0, 128, 64);
 }
 
 .navbar-top-links .dropdown-menu li {
@@ -274,7 +274,7 @@ table.dataTable thead .sorting:after {
     content: "\f0dc";
     float: right;
     font-family: fontawesome;
-    color: rgba(50,50,50,.5);
+    color: rgb(0, 128, 128);
 }
 
 .btn-circle {
