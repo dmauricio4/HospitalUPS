@@ -67,9 +67,12 @@
 				<f:facet name="header">Codigo</f:facet>#{c.id_persona}</h:column>
 			<h:column>
 				<f:facet name="header">Cedula</f:facet>
+				
 				<h:inputText value="#{c.cedula}" size="10"
 					rendered="#{c.editable}" />
+					
 				<h:outputText class="badge badge-sm bg-gradient-success" value="#{c.cedula}" rendered="#{not c.editable}" />
+				
 			</h:column>	
 			<h:column>
 				<f:facet name="header">Nombres</f:facet>
