@@ -39,9 +39,7 @@ public class Persona implements Serializable {
 	private String estado;
 	@Transient
 	private Boolean editable;
-	
-	@OneToMany(mappedBy="sesion")
-	private List<Sesion> sesion;
+	 
 
 	public Persona() {
 	}

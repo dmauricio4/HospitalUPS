@@ -12,6 +12,12 @@
 	<meta name="author" content="" />
 	<title><ui:insert name="title" /></title>
     <link href="../css/font-awesome.css" rel="stylesheet"/>
+    <link href="../css/bootstrap.min.css" rel="stylesheet"/>
+<link href="../css/bootstrap-responsive.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet"/>
+<link href="../css/font-awesome.css" rel="stylesheet"/>
+<link href="../css/style.css" rel="stylesheet/"/>
+<link href="../css/pages/dashboard.css" rel="stylesheet"/>
 	<!-- Bootstrap Core CSS -->
 	<link href="../template/css/bootstrap.min.css" rel="stylesheet" />
 	<link href="../template/css/metisMenu.min.css" rel="stylesheet" />
@@ -22,11 +28,10 @@
 	
 	<link href="../css/style.css" rel="stylesheet" type="text/css" />
 	
+	
+	
 	<f:event type="preRenderView"
-		listener="#{verificarSesionBean.verificarSessionDoc()}" /> 
-	<f:event type="preRenderView"
-		listener="#{personaBean.}" /> 
-		
+		listener="#{personaBean.listarCitasID()}" />  
 		
 </h:head>
 <h:body>
@@ -37,6 +42,9 @@
 		<nav class="navbar-inner" role="navigation">
 			<div class="navbar-header">
 				<a class="navbar-brand" href="/HospitalUPS/doctor/templateDoctor.xhtml">Home Doctor</a>
+				<!-- Navigation 
+				<h:outputText class="badge badge-sm bg-gradient-success" value='#{session.getAttribute("persona").getIdPersona()}'  />-->
+					
 			</div>
 
 			<button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -52,7 +60,7 @@
 			
 				<li class="dropdown"><a  style="color:blue" class="dropdown-toggle"
 					data-toggle="dropdown" href="#"> <i class="fa fa-user fa-fw"></i>
-						Bienvenido(a) #{loginBean.correo} <b class="caret"></b>
+						Bienvenido(a):<strong> #{session.getAttribute("persona").getNombres()}</strong>  <b class="caret"></b>
 				</a>
 					<ul class="dropdown-menu dropdown-user">
 						<li><p:commandButton icon="fa fa-fw fa-sign-out"
@@ -90,6 +98,16 @@
 		</nav>
 
 		<div id="page-wrapper">
+		<form class="navbar-search pull-right">
+		    <h5>Ingrese Cedula</h5>
+          <h:inputText   class="search-query" id="cedula" value="#{personaBean.cedula}"/>
+       
+	<h:commandButton action="#{personaBean.buscarCitasCedulas()}" value="Buscar Paciente" >
+		<f:ajax execute="cedula"  event="click" render="sinC codC comC cosC estC fecC sinC"/>
+	</h:commandButton>
+	
+	
+        </form>
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12">
@@ -102,30 +120,30 @@
                 
                 <h:column> 
                 <f:facet class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" name="header">codigo</f:facet>
-                <h:outputText class="badge badge-sm bg-gradient-success" id="noml" value="#{cita.idCita}"  />
+                <h:outputText class="badge badge-sm bg-gradient-success" id="codC" value="#{personaBean.id_persona}"  />
                 </h:column>
                 <h:column>
                 <f:facet class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" name="header">comentario cita</f:facet>
-                <h:outputText class="badge badge-sm bg-gradient-success" id="isbl" value="#{cita.comentarioCita}"  />
+                <h:outputText class="badge badge-sm bg-gradient-success" id="comC" value="#{cita.comentarioCita}"  />
                 </h:column>
                 <h:column>
                 <f:facet class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" name="header">Costo</f:facet>
-                <h:outputText class="badge badge-sm bg-gradient-success" id="pagl" value="#{cita.costo}"  /> 
+                <h:outputText class="badge badge-sm bg-gradient-success" id="cosC" value="#{cita.costo}"  /> 
                 </h:column>
                   <h:column>
                  <f:facet class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" name="header">Estado Cita</f:facet>
-                <h:outputText class="badge badge-sm bg-gradient-success" id="capl" value="#{cita.estadoCita}"  />                 
+                <h:outputText class="badge badge-sm bg-gradient-success" id="estC" value="#{cita.estadoCita}"  />                 
                 </h:column>
                 
                 <h:column>
                  <f:facet class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" name="header">Fecha</f:facet>
-                <h:outputText class="badge badge-sm bg-gradient-success" id="autl" value="#{cita.fechaCita}"  /> 
+                <h:outputText class="badge badge-sm bg-gradient-success" id="fecC" value="#{cita.fechaCita}"  /> 
                 	
                 </h:column>
                
                 <h:column>
                  <f:facet class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" name="header">Sitomas </f:facet>
-                <h:outputText class="badge badge-sm bg-gradient-success" id="capl" value="#{cita.sintomatologia}"  />  
+                <h:outputText class="badge badge-sm bg-gradient-success" id="sinC" value="#{cita.sintomatologia}"  />  
                 
                 </h:column>
                 
