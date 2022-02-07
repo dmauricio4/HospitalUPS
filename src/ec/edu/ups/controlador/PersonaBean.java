@@ -9,12 +9,15 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.annotation.FacesConfig;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import ec.edu.ups.ejb.CitaFacade;
 import ec.edu.ups.ejb.PersonaFacade;
@@ -39,8 +42,7 @@ public class PersonaBean implements Serializable {
 	private String telefono;
 	private String correo;
 	private String rol;
-	private String password;
-	
+	private String password;	
 	private Integer id_persona;
 
 	@EJB
@@ -63,8 +65,8 @@ public class PersonaBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		list = ejbCategoryFacade.findAll();
-		citas = ejbCitaFacade.findAll();
+		list = ejbCategoryFacade.findAll(); 
+		citas= ejbCitaFacade.findAll();
 	}
 
 	public Persona[] getList() {
@@ -173,9 +175,10 @@ public class PersonaBean implements Serializable {
 	public void setId_persona(Integer id_persona) {
 		this.id_persona = id_persona;
 	}
+ 
 
-	public Cita[] getCitas() {
-		return citas.toArray(new Cita[0]);
+	public List<Cita> getCitas() {
+		return citas;
 	}
 
 	public void setCitas(List<Cita> citas) {
@@ -246,12 +249,28 @@ public class PersonaBean implements Serializable {
 		this.pacientePersona = pacientePersona;
 	} 
 	
-	public List<Cita> listarCitasID() {
-		citas = ejbCitaFacade.getCitaEsperaID(this.id_persona);
+	public List<Cita> listarCitasID() {  
+		FacesContext context = FacesContext.getCurrentInstance();			
+		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();		
+		
+		HttpSession session = request.getSession(true); 	
+		
+		Persona per = new Persona();
+		per=(Persona)session.getAttribute("persona"); 
+		
+		this.id_persona= per.getIdPersona();
+
+		citas = ejbCitaFacade.getCitaEsperaID(per.getIdPersona());
 		return citas;
 	}
 	
 
+	
+	public String buscarCitasCedulas() {
+		citas= ejbCitaFacade.getCitasCedula(this.cedula);
+		
+		return null;
+	}
 	public String add() {
 
 		Persona per = new Persona();
