@@ -52,30 +52,34 @@ public class LoginServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		String url = null;
+		String url = "http://localhost:8080/HospitalUPS";
 		String rol = "";  
+		
 		
 		listpersona = ejbPersonaFacade.findbylogin(email,password);		
 		for (Persona persona : listpersona) {
 			this.id_persona= persona.getIdPersona();
 			email = persona.getCorreo();
-						if (persona.getRol().equalsIgnoreCase("doctor")) {	
+						if (persona.getRol().equals("doctor")) {	
 				HttpSession session = request.getSession(true);
-				session.setAttribute("persona", persona);				 	
-					url="./doctor/templateDoctor.xhtml";	  					
-			}else if (persona.getRol().equalsIgnoreCase("secretaria")) {
-				 url="./template/error.html";
+				session.setAttribute("persona", persona);					
+				url+="/doctor/templateDoctor.xhtml";	 
+			}else if (persona.getRol().equals("secretaria")) {
+				 url+="/template/error.html";
 			}
 			if (persona.getRol().equalsIgnoreCase("administrador")) {
-				url="./administrador/error.html";	
+				url+="/administrador/error.html";	
 			}
 			if (persona.getRol().equalsIgnoreCase("paciente")) {
-				url = "./paciente/error.html";
+				url += "/paciente/error.html";
 			}
 			
 			break;					
 		}	 
-		request.getRequestDispatcher(url).forward(request, response);
+		response.sendRedirect (url);
+
+		//request.getRequestDispatcher(url).forward(request, response);
+		
 		 
 
 	}

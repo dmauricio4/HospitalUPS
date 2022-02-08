@@ -27,23 +27,11 @@
 	<link href="../template/css/style.css" rel="stylesheet" type="text/css" />
 	
 	<link href="../css/style.css" rel="stylesheet" type="text/css" />
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
- 
- <link href="../template/css/menustyle.css" rel="stylesheet" type="text/css" />
-	 
 	
 	
 	
-		
 	<f:event type="preRenderView"
-		listener="#{personaBean.ValidarSesion()}" />
-		
-	<f:event type="postRenderView"
 		listener="#{personaBean.listarCitasID()}" />  
-		
-
-	<f:event type="preRenderView"
-		listener="#{personaBean.init()}" />  
 		
 </h:head>
 <h:body>
@@ -82,27 +70,26 @@
 			</ul>
 			<!-- /.navbar-top-links -->
 
-	<div class="navbar-default sidebar" role="navigation">
+			<div class="navbar-default sidebar" role="navigation">
 				<div class="sidebar-nav navbar-collapse">
 					<ul class="nav" id="side-menu">
  
-					 <div class="subnav">
-    <button  style="color:blue" class="subnavbtn">Citas Medicas <i class="fa fa-caret-down"></i></button>
-    <div   class="subnav-content">
-      <a href="/HospitalUPS/doctor/citasporAtender.xhtml"> <i
-										class="icon-large icon-indent-right" /> Citas por Atender</a>
-										<br/>
-      <a href="/HospitalUPS/doctor/citasCanceladas.xhtml"> <i
-										class="icon-large icon-indent-right" />Citas Canceladas</a>
-										<br/>
-     <a href="/HospitalUPS/doctor/crearHistorial.xhtml"> <i
-										class="icon-large icon-indent-right" />Gestion Historial</a>
-    </div>
-  </div> 
+						<li><a href="#"><i class="fa fa-users fa-fw"></i>
+								Citas Medicas<span class="fa arrow"></span></a>
+								
+							<ul class="nav nav-second-level">
+								<li><a href="CreacionEmpleado.xhtml"> <i
+										class="icon-list-alt" />Citas Atendidas</a></li>
+							</ul> <!-- /.nav-second-level --></li>
+							<ul class="nav nav-second-level">
 							
-							
-							
-							 
+								<li><a href="citasporAtender.xhtml"> <i
+										class="icon-large icon-tasks" />Citas por Atender</a></li>
+							</ul>
+							<ul class="nav nav-second-level">
+								<li><a href="CreacionPoliza.xhtml"> <i
+										class="icon-large icon-indent-right" />Citas Canceladas</a></li>
+							</ul>
 					</ul>
 				</div>
 				<!-- /.sidebar-collapse -->
@@ -116,7 +103,7 @@
           <h:inputText   class="search-query" id="cedula" value="#{personaBean.cedula}"/>
        
 	<h:commandButton action="#{personaBean.buscarCitasCedulas()}" value="Buscar Paciente" >
-		<f:ajax execute="cedula"  event="click" render="codigoCita comentarioCita costoCita estadoCita estadoCita fechaCita sintomaCita"/>
+		<f:ajax execute="cedula"  event="click" render="sinC codC comC cosC estC fecC sinC"/>
 	</h:commandButton>
 	
 	
@@ -150,22 +137,22 @@
                 
                 <h:column>
                  <f:facet class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" name="header">Fecha</f:facet>
-                <h:outputText class="badge badge-sm bg-gradient-success" id="fechaCita" value="#{cita.fechaCita}"  /> 
+                <h:outputText class="badge badge-sm bg-gradient-success" id="fechaC" value="#{cita.fechaCita}"  /> 
                 	
                 </h:column>
                
                 <h:column>
                  <f:facet class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" name="header">Sitomas </f:facet>
-                <h:outputText class="badge badge-sm bg-gradient-success" id="sintomaCita" value="#{cita.sintomatologia}"  />                  
+                <h:outputText class="badge badge-sm bg-gradient-success" id="sinC" value="#{cita.sintomatologia}"  />                  
                 </h:column>
                
                 <h:column>
 				<f:facet name="header">Opcion</f:facet>
-				<h:commandLink value="Cancelar" class="btn btn-danger" action="#{personaBean.cancelarCita(cita)}"  />
+				<h:commandLink value="Cancelar" action="#{personaBean.cancelarCita(cita)}" rendered="true" />
 			</h:column>
 			<h:column>
 				<f:facet name="header">Opcion</f:facet> 					
-				<h:commandLink value="Atender" class="btn btn-success"  action="#{personaBean.atenderCita(cita)}" />
+				<h:commandLink value="Atender" action="#{personaBean.atenderCita(cita)}" rendered="true" />
 			</h:column>
 			
                 
