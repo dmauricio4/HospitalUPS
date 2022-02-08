@@ -56,8 +56,13 @@ public class LoginServlet extends HttpServlet {
 		String rol = "";  
 		
 		
-		listpersona = ejbPersonaFacade.findbylogin(email,password);		
+		listpersona = ejbPersonaFacade.findbylogin(email,password);	
+		
+		if(listpersona.isEmpty()) {
+			url += "/login.html";
+		}
 		for (Persona persona : listpersona) {
+			
 			this.id_persona= persona.getIdPersona();
 			email = persona.getCorreo();
 						if (persona.getRol().equals("doctor")) {	
@@ -74,6 +79,7 @@ public class LoginServlet extends HttpServlet {
 				url += "/paciente/error.html";
 			}
 			
+			 
 			break;					
 		}	 
 		response.sendRedirect (url);
