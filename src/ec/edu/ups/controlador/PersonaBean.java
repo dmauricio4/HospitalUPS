@@ -1,5 +1,6 @@
 package ec.edu.ups.controlador;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -9,6 +10,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.annotation.FacesConfig;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.persistence.Column;
@@ -16,7 +18,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import ec.edu.ups.ejb.CitaFacade;
@@ -249,20 +253,55 @@ public class PersonaBean implements Serializable {
 		this.pacientePersona = pacientePersona;
 	} 
 	
-	public List<Cita> listarCitasID() {  
-		FacesContext context = FacesContext.getCurrentInstance();			
-		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();		
+	
+	public String listarCitasID() {  
 		
-		HttpSession session = request.getSession(true); 	
-		
-		Persona per = new Persona();
-		per=(Persona)session.getAttribute("persona"); 
-		
-		this.id_persona= per.getIdPersona();
+		FacesContext context = FacesContext.getCurrentInstance(); 		
+		Persona persona = (Persona)context.getExternalContext().getSessionMap().get("persona"); 
+		 
+		this.id_persona= persona.getIdPersona();
 
-		citas = ejbCitaFacade.getCitaEsperaID(per.getIdPersona());
-		return citas;
+		citas = ejbCitaFacade.getCitaEsperaID(persona.getIdPersona());
+		return null;
 	}
+	
+	 
+	
+	public String ValidarSesion()  {  
+		
+        FacesContext context = FacesContext.getCurrentInstance(); 		
+		Persona persona = (Persona)context.getExternalContext().getSessionMap().get("persona"); 
+		
+		 if(persona.getRol().equals("doctor")) {
+ 
+         	System.out.println("El Usuario doctor esta logeado");
+         }else {
+        	 
+ 
+        	  ExternalContext externalContext = context.getExternalContext();
+        	  HttpServletResponse response = (HttpServletResponse) externalContext.getResponse();     
+        	  HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();   	  
+ 
+
+        		try {
+					request.getRequestDispatcher("index.html").forward(request, response);
+				} catch (ServletException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				};
+
+      		//response.sendRedirect ("http://localhost:8080/HospitalUPS/index.html");
+
+      		//request.getRequestDispatcher(url).forward(request, response);
+ 			
+         } 
+		
+		return null;
+	}
+	
 	
 
 	
@@ -271,31 +310,28 @@ public class PersonaBean implements Serializable {
 		
 		return null;
 	}
-	public String add() {
-
-		Persona per = new Persona();
-		per.setApellidos(apellidos);
-		per.setCedula(cedula);
-		per.setNombres(nombres);
-		per.setDireccion(direccion);
-		per.setTelefono(telefono);
-		per.setCorreo(correo);
-		per.setRol(rol);
-		per.setPassword(password);
-		ejbCategoryFacade.create(per);
-		list = ejbCategoryFacade.findAll();
-
-		this.cedula = "";
-		this.nombres = "";
-		this.apellidos = "";
-		this.direccion = "";
-		this.telefono = "";
-		this.correo = "";
-		this.rol = "Selecionar";
-		this.password = "";
-		per = new Persona();
+	
+	 	
+	public String cancelarCita() {		
+		List<Cita> citas = ejbCitaFacade.getCitasCedula(this.cedula);
+		for (Cita cita : citas) {
+			cita.setEstadoCita("Cancelado");
+			ejbCitaFacade.edit(cita);			
+			break;			
+		}		
 		return null;
 	}
+	
+	public String atenderCita() {		
+		List<Cita> citas = ejbCitaFacade.getCitasCedula(this.cedula);
+		for (Cita cita : citas) {
+			cita.setEstadoCita("Atendido");
+			ejbCitaFacade.edit(cita);			
+			break;			
+		}		
+		return null;
+	}
+	
 
 	public String delete(Persona c) {
 		ejbCategoryFacade.remove(c);
@@ -313,5 +349,7 @@ public class PersonaBean implements Serializable {
 		c.setEditable(false);
 		return null;
 	}
+	
+	
 
 }
