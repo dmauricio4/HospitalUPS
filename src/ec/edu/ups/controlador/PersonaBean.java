@@ -58,6 +58,7 @@ public class PersonaBean implements Serializable {
 	private String estadoCita;
 	private Date fechaCita;
 	private String sintomatologia;
+	private Cita cita;
 
 	private Persona doctorEspecialidad;
 
@@ -71,6 +72,15 @@ public class PersonaBean implements Serializable {
 	public void init() {
 		list = ejbCategoryFacade.findAll(); 
 		citas= ejbCitaFacade.findAll();
+	}
+	
+
+	public Cita getCita() {
+		return cita;
+	}
+
+	public void setCita(Cita cita) {
+		this.cita = cita;
 	}
 
 	public Persona[] getList() {
@@ -307,28 +317,24 @@ public class PersonaBean implements Serializable {
 	
 	public String buscarCitasCedulas() {
 		citas= ejbCitaFacade.getCitasCedula(this.cedula);
-		
 		return null;
 	}
 	
 	 	
-	public String cancelarCita() {		
-		List<Cita> citas = ejbCitaFacade.getCitasCedula(this.cedula);
-		for (Cita cita : citas) {
-			cita.setEstadoCita("Cancelado");
-			ejbCitaFacade.edit(cita);			
-			break;			
-		}		
+	public String cancelarCita(Cita c) {		
+			c.setEstadoCita("Cancelado");
+			ejbCitaFacade.edit(c);			
+
+			citas=ejbCitaFacade.findAll();
+				
 		return null;
 	}
 	
-	public String atenderCita() {		
-		List<Cita> citas = ejbCitaFacade.getCitasCedula(this.cedula);
-		for (Cita cita : citas) {
-			cita.setEstadoCita("Atendido");
-			ejbCitaFacade.edit(cita);			
-			break;			
-		}		
+	public String atenderCita(Cita c) {		
+		c.setEstadoCita("Atendido");
+		ejbCitaFacade.edit(c);	
+
+		citas=ejbCitaFacade.findAll();
 		return null;
 	}
 	

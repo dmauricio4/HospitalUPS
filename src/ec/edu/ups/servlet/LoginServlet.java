@@ -52,6 +52,7 @@ public class LoginServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
+		
 		String url = "http://localhost:8080/HospitalUPS";
 		String rol = "";  
 		
