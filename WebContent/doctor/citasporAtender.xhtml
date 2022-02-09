@@ -39,12 +39,10 @@
 		listener="#{personaBean.ValidarSesion()}" />
 		
 	<!--  -->
-	<f:event type="postRenderView"
+	<f:event type="preRenderView"
 		listener="#{personaBean.listarCitasID()}" />  
 		
-
-	<f:event type="preRenderView"
-		listener="#{personaBean.init()}" />  
+ 
 		
 </h:head>
 <h:body>

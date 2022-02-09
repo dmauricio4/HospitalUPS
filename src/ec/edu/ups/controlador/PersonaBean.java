@@ -3,6 +3,7 @@ package ec.edu.ups.controlador;
 import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -71,7 +72,8 @@ public class PersonaBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		list = ejbCategoryFacade.findAll(); 
-		citas= ejbCitaFacade.findAll();
+		citas= new ArrayList<Cita>();
+		
 	}
 	
 
@@ -264,15 +266,33 @@ public class PersonaBean implements Serializable {
 	} 
 	
 	
-	public String listarCitasID() {  
+	public List<Cita> listarCitasID() {  
 		
 		FacesContext context = FacesContext.getCurrentInstance(); 		
 		Persona persona = (Persona)context.getExternalContext().getSessionMap().get("persona"); 
-		 
-		this.id_persona= persona.getIdPersona();
+		this.id_persona= persona.getIdPersona(); 
+		
+		List<Cita> citasb=ejbCitaFacade.findAll();
+		
+		
+		for (Cita cita : citasb) { 
+		Persona codigo = cita.getDoctorEspecialidad();
+				
+			if (codigo.getIdPersona() ==this.id_persona &&  cita.getEstadoCita().equals("En espera")) {
+				System.out.println("valor de cita condicionada---------------"+cita.toString());
+				citas.add(cita);
+				
+				//&& 
 
-		citas = ejbCitaFacade.getCitaEsperaID(persona.getIdPersona());
-		return null;
+				
+			}
+			
+			
+		}
+		
+
+		//citas = ejbCitaFacade.getCitaEsperaID(persona.getIdPersona());
+		return citas;
 	}
 	
 	 
