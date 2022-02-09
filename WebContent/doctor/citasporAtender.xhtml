@@ -38,6 +38,7 @@
 	<f:event type="preRenderView"
 		listener="#{personaBean.ValidarSesion()}" />
 		
+	<!--  -->
 	<f:event type="postRenderView"
 		listener="#{personaBean.listarCitasID()}" />  
 		
@@ -158,6 +159,7 @@
                  <f:facet class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" name="header">Sitomas </f:facet>
                 <h:outputText class="badge badge-sm bg-gradient-success" id="sintomaCita" value="#{cita.sintomatologia}"  />                  
                 </h:column>
+                
                
                 <h:column>
 				<f:facet name="header">Opcion</f:facet>

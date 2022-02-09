@@ -30,7 +30,13 @@ public class CerrarSesionServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession(false);
 		session.invalidate();	
-		request.getRequestDispatcher("/Public/homePaciente.jsp").forward(request, response);
+
+		String url = "http://localhost:8080/HospitalUPS";
+
+		response.sendRedirect (url);
+		
+		
+		//request.getRequestDispatcher("/Public/homePaciente.jsp").forward(request, response);
 	
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	}

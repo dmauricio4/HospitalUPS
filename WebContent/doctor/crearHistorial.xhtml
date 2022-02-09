@@ -1,9 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:h="http://java.sun.com/jsf/html" lang="es">
+	xmlns:h="http://java.sun.com/jsf/html">
 <h:head>
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -96,6 +97,8 @@
 			<div class="container-fluid">
 			
 			 <div class="panel panel-default">
+			 <h:form> 
+			 
                                 <div class="panel-heading">
                                     Crear Historial Clinico Paciente
                                 </div>
@@ -103,7 +106,7 @@
                                 
                                 
                                                 <div class="form-group input-group">
-                                                    <input type="text"  placeholder="Ingrese Cedula Paciente" class="form-control"/>
+                                                    <h:inputText type="text"  placeholder="Ingrese Cedula Paciente" id="cedula" value="#{personaBean.cedula}" class="form-control"/>
                                                     <span class="input-group-btn">
                                                         <button class="btn btn-default" type="button"><i class="fa fa-search"></i>
                                                         </button>
@@ -111,50 +114,43 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Selecionar Paciente</label>
-                                                    <select class="form-control">
-                                                        <option>1</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                        <option>5</option>
-                                                    </select>
+                                                    <h:selectOneMenu  class="form-control" value="#{historialBean.id_cita}">
+														<f:selectItem itemValue="1" itemLabel="Usuario 1"/>
+														<f:selectItem itemValue="2" itemLabel="Usuario 2"/> 
+														<f:selectItem itemValue="3" itemLabel="Usuario 3"/> 
+												</h:selectOneMenu>
+				
+                                                    
                                                 </div>
+                                                
+                                            <h:form role="form">
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-lg-6">
-                                            <form role="form">
-                                              <div class="form-group">
-                                                    <label>Selecione orden</label>
-                                                    <div class="radio">
-                                                        <label>
-                                                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" />Radio 1
-                                                        </label>
-                                                    </div>
-                                                    <div class="radio">
-                                                        <label>
-                                                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"/>Radio 2
-                                                        </label>
-                                                    </div>
-                                                    <div class="radio">
-                                                        <label>
-                                                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3"/>Radio 3
-                                                        </label>
-                                                    </div>
+                                             <div class="form-group">
+                                                    <label>Ingrese Orden: </label>
+                                                    <h:inputText  value="#{historialBean.orden}" class="form-control" placeholder="Ingrese Orden"/>
+                                                     
                                                 </div>
+                                                
                                                 <div class="form-group">
                                                     <label>Ingrese Receta: </label>
-                                                    <input class="form-control" placeholder="Ingrese Receta"/>
+                                                    <h:inputText value="#{historialBean.receta}"  class="form-control" placeholder="Ingrese Receta"/>
                                                      
                                                 </div>
                                                  
                                                  
-                                                     <button type="submit" class="btn btn-primary">Crear Historial</button>
-                                            </form>
+													<h:commandButton class="btn btn-primary" value="Crear Historial" action="#{historialBean.guardar}" />
+													 
+                                           
                                         </div>
                                         <!-- /.col-lg-6 (nested) -->
                                     </div>
                                     <!-- /.row (nested) -->
                                 </div>
+                                
+                                 </h:form>
+			 </h:form>
                                 <!-- /.panel-body -->
                             </div>
 				<div class="row">
