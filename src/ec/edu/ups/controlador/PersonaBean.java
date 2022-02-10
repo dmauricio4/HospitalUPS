@@ -290,7 +290,58 @@ public class PersonaBean implements Serializable {
 		return citas;
 	}
 	
+  
 	public List<Cita> listarCitasAtendidas() {  
+    citas= new ArrayList<Cita>();
+		FacesContext context = FacesContext.getCurrentInstance(); 		
+		Persona persona = (Persona)context.getExternalContext().getSessionMap().get("persona"); 
+		this.id_persona= persona.getIdPersona(); 
+		
+		List<Cita> citasb=ejbCitaFacade.findAll();
+		
+		
+		for (Cita cita : citasb) { 
+		Persona codigo = cita.getDoctorEspecialidad();
+      
+			if (codigo.getIdPersona() ==this.id_persona &&  cita.getEstadoCita().equals("Atendido")) {
+        System.out.println("CIta condicionada---------------"+cita.toString());
+				citas.add(cita);
+				 		
+			} 
+			
+			
+		} 
+		return citas;
+	}
+        
+        
+      
+    
+	public List<Cita> listarCitasCanceladas() {   
+		citas= new ArrayList<Cita>();
+		FacesContext context = FacesContext.getCurrentInstance(); 		
+		Persona persona = (Persona)context.getExternalContext().getSessionMap().get("persona"); 
+		this.id_persona= persona.getIdPersona(); 
+		
+		List<Cita> citasb=ejbCitaFacade.findAll();
+		
+		
+		for (Cita cita : citasb) { 
+		Persona codigo = cita.getDoctorEspecialidad();
+	 
+			if (codigo.getIdPersona() ==this.id_persona &&  cita.getEstadoCita().equals("Cancelada")) {
+        
+				System.out.println("CIta condicionada---------------"+cita.toString());
+				citas.add(cita);
+				 		
+			} 
+			
+			
+		} 
+		return citas;
+	}
+	 
+	public List<Cita> listarCitasAgendadas() {  
 		citas= new ArrayList<Cita>();
 		FacesContext context = FacesContext.getCurrentInstance(); 		
 		Persona persona = (Persona)context.getExternalContext().getSessionMap().get("persona"); 
@@ -302,7 +353,7 @@ public class PersonaBean implements Serializable {
 		for (Cita cita : citasb) { 
 		Persona codigo = cita.getDoctorEspecialidad();
 				
-			if (codigo.getIdPersona() ==this.id_persona &&  cita.getEstadoCita().equals("Atendido")) {
+			if (codigo.getIdPersona() ==this.id_persona &&  cita.getEstadoCita().equals("Agendado")) {
 				System.out.println("CIta condicionada---------------"+cita.toString());
 				citas.add(cita);
 				 		
@@ -313,6 +364,8 @@ public class PersonaBean implements Serializable {
 		return citas;
 	}
 	
+	
+	
 	 
 	
 	public String ValidarSesion()  {  
@@ -320,7 +373,7 @@ public class PersonaBean implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance(); 		
 		Persona persona = (Persona)context.getExternalContext().getSessionMap().get("persona"); 
 		
-		 if(persona.getRol().equals("doctor")) {
+		 if(persona.getRol().equals("Doctor")) {
  
          	System.out.println("El Usuario doctor esta logeado");
          }else {

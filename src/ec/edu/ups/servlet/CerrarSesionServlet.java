@@ -1,6 +1,8 @@
 package ec.edu.ups.servlet;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,18 +29,13 @@ public class CerrarSesionServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		HttpSession session = request.getSession(false);
-		session.invalidate();	
 
-		String url = "http://localhost:8080/HospitalUPS";
+		HttpSession sesion = request.getSession();
+		sesion.invalidate();
+		System.out.println("sesion Destruida");
+		RequestDispatcher d = getServletContext().getRequestDispatcher("/login.html");
+		d.forward(request, response);
 
-		response.sendRedirect (url);
-		
-		
-		//request.getRequestDispatcher("/Public/homePaciente.jsp").forward(request, response);
-	
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
