@@ -66,7 +66,7 @@ public class LoginServlet extends HttpServlet {
 			
 			this.id_persona= persona.getIdPersona();
 			email = persona.getCorreo();
-						if (persona.getRol().equals("doctor")) {	
+						if (persona.getRol().equals("Doctor")) {	
 				HttpSession session = request.getSession(true);
 				session.setAttribute("persona", persona);					
 				url+="/doctor/templateDoctor.xhtml";	 
