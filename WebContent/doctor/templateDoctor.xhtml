@@ -58,6 +58,16 @@
 						class="fa fa-user fa-fw"></i> Bienvenido(a) : <strong>
 							#{session.getAttribute("persona").getNombres()} </strong>
 				</a>
+				
+				<!-- cerrar sesion
+				
+				<form action="/HospitalUPS/CerrarSesionServlet" method="get" role="form">
+					<button type="submit" class="btn btn-lg btn-success btn-block">Cerrar Sesion</button>
+                </form>
+                 -->
+                
+                <a href="/HospitalUPS/CerrarSesionServlet">Cerrar Sesion</a>
+				
 					<ul class="dropdown-menu dropdown-user">
 						<li><p:commandButton icon="fa fa-fw fa-sign-out" action=""
 								value="Cerrar Sesión" styleClass="red-button" /></li>
