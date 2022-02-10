@@ -24,7 +24,7 @@ public class Historial implements Serializable {
 	private String receta;
 
 	//bi-directional many-to-one association to Cita
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name="id_cita")
 	private Cita cita;
 
@@ -63,4 +63,11 @@ public class Historial implements Serializable {
 		this.cita = cita;
 	}
 
+	@Override
+	public String toString() {
+		return "Historial [idHistorial=" + idHistorial + ", orden=" + orden + ", receta=" + receta + ", cita=" + cita
+				+ "]";
+	}
+
+	
 }

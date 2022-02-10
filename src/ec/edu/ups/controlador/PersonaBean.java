@@ -72,7 +72,8 @@ public class PersonaBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		list = ejbCategoryFacade.findAll(); 
-		citas= new ArrayList<Cita>();
+		
+		citas= ejbCitaFacade.findAll();
 		
 	}
 	
@@ -289,6 +290,29 @@ public class PersonaBean implements Serializable {
 		return citas;
 	}
 	
+	public List<Cita> listarCitasAtendidas() {  
+		citas= new ArrayList<Cita>();
+		FacesContext context = FacesContext.getCurrentInstance(); 		
+		Persona persona = (Persona)context.getExternalContext().getSessionMap().get("persona"); 
+		this.id_persona= persona.getIdPersona(); 
+		
+		List<Cita> citasb=ejbCitaFacade.findAll();
+		
+		
+		for (Cita cita : citasb) { 
+		Persona codigo = cita.getDoctorEspecialidad();
+				
+			if (codigo.getIdPersona() ==this.id_persona &&  cita.getEstadoCita().equals("Atendido")) {
+				System.out.println("CIta condicionada---------------"+cita.toString());
+				citas.add(cita);
+				 		
+			} 
+			
+			
+		} 
+		return citas;
+	}
+	
 	 
 	
 	public String ValidarSesion()  {  
@@ -327,7 +351,8 @@ public class PersonaBean implements Serializable {
 	
 	
 	public List<Cita> buscarCitasCedulas() {  
-		citas= new ArrayList<Cita>();   	
+		citas= new ArrayList<Cita>();   
+		
 		this.idCita=0;
 		this.comentarioCita="";
 		this.estadoCita="";
@@ -335,33 +360,22 @@ public class PersonaBean implements Serializable {
 		this.sintomatologia="";
 		this.doctorEspecialidad= new Persona();
 		this.pacientePersona=new Persona();
-		List<Cita> citasb=ejbCitaFacade.findAll();
-		System.out.println("Valor de cedula ingresada"+this.cedula);
 		
+		List<Cita> citasb=ejbCitaFacade.findAll(); 	
 		
 		for (Cita cital : citasb) { 
-		 Persona persona = cital.getPacientePersona();
+		 Persona persona = cital.getPacientePersona();	  
 		 
-		 System.out.println("Se presenta la variable de cita < "+persona.toString());
-				//&&  cita.getEstadoCita().equals("En espera")
-			if (persona.getCedula().equals(this.cedula)) {
-				//cita =cital;
-				this.idCita=cital.getIdCita();
-				this.comentarioCita=cital.getComentarioCita();
-				this.estadoCita=cital.getEstadoCita();
-				this.fechaCita=cital.getFechaCita();
-				this.sintomatologia=cital.getSintomatologia();
-				this.doctorEspecialidad=cital.getDoctorEspecialidad();
-				this.pacientePersona=cital.getPacientePersona();				
-				System.out.println("valor de cita condicionada---------------"+cital.toString());
-				
-				citas.add(cital);
-				 break;				 		
+			if (persona.getCedula().equals(this.cedula)&&  cital.getEstadoCita().equals("En espera")) {
+				//this.cita =cital;				 			 
+				citas.add(cital);		 		
+
+				System.out.println("valor de cita buscada > "+citas.toString());
 			} 
 			
-		} 
-		System.out.println("Valor de lista cistas >>> "+citas.toString());
-		 citasb= new ArrayList<Cita>();
+			
+		}   
+		this.cedula="";
 		return citas;
 	}
 	

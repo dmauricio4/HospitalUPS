@@ -34,7 +34,8 @@
 		<nav class="navbar-inner" role="navigation">
 			<div class="navbar-header">
 				<a class="navbar-brand" href="/HospitalUPS/doctor/templateDoctor.xhtml">Home Doctor</a>
-				<a class="navbar-brand" href="#"> Crear Historial Paciente</a>
+				
+				<a class="navbar-brand" href="#">Actualizar Historia Paciente</a>
 			</div>
 
 			<button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -77,7 +78,7 @@
 			<!-- /.navbar-top-links -->
 <div class="navbar-default sidebar" role="navigation">
 				<div class="sidebar-nav navbar-collapse">
-					<li><a href="#"><i class="fa fa-users fa-fw"></i>
+					 <li><a href="#"><i class="fa fa-users fa-fw"></i>
 								Citas Medicas<span class="fa arrow"></span></a>
 							 <a href="/HospitalUPS/doctor/citasAtendidas.xhtml"> <i
 										class="icon-list-alt" />Citas Atendidas</a></li>
@@ -112,12 +113,14 @@
 		<div id="page-wrapper">
 			<div class="container-fluid">
 			
-			 <div class="panel panel-default"> 
+			 <div class="panel panel-default">
 			 
                                 <div class="panel-heading">
-                                    Crear Historial Clinico Paciente
+                                    Actualizar Historial por Cita
                                 </div>
-                                 <h:form> 
+                                
+                                
+			 <h:form> 
                                 
                                                 <div class="form-group input-group">
                                                 
@@ -136,8 +139,8 @@
                                                     
                                                    <h:selectOneMenu  id="selecion" class="form-control" value="#{historialBean.id_cita}">
                                                          <f:selectItem itemLabel="Seleciona una Cita"  itemValue="0"/>
-														  <f:selectItems value="#{personaBean.citas}" var="ci" itemLabel="Codigo Cita:#{ci.idCita} Costo:#{ci.costo} Sintoma:#{ci.sintomatologia}  Paciente:#{ci.pacientePersona.nombres} fecha:#{ci.fechaCita} " itemValue="#{ci.idCita}" />
-														
+														  <f:selectItems value="#{personaBean.citas}" var="ci" itemLabel="Codigo Cita:#{ci.idCita} Costo:#{ci.costo} Sintoma:#{ci.sintomatologia}  Paciente:#{ci.pacientePersona.nombres} fecha:#{ci.fechaCita}" itemValue="#{ci.idCita}"  />
+														 <f:ajax  execute="selecion" id="citab" event="click" render="orden receta"/>
 												</h:selectOneMenu>
 				
                                                     
@@ -146,24 +149,25 @@
                                                 
 			 </h:form>
                                                 
-                                <h:form role="form">
+                                            <h:form role="form">
+                                            
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-lg-6">
                                              <div class="form-group">
                                                     <label>Ingrese Orden: </label>
-                                                    <h:inputText  value="#{historialBean.orden}" class="form-control" placeholder="Ingrese Orden"/>
+                                                    <h:inputText  value="#{historialBean.orden}" id="orden" class="form-control" placeholder="Ingrese Orden"/>
                                                      
                                                 </div>
                                                 
                                                 <div class="form-group">
                                                     <label>Ingrese Receta: </label>
-                                                    <h:inputText value="#{historialBean.receta}"  class="form-control" placeholder="Ingrese Receta"/>
+                                                    <h:inputText value="#{historialBean.receta}" id="receta" class="form-control" placeholder="Ingrese Receta"/>
                                                      
                                                 </div>
                                                  
                                                  
-													<h:commandButton class="btn btn-primary" value="Crear Historial" action="#{historialBean.guardar}" />
+													<h:commandButton class="btn btn-primary" value="Actualizar Historial" action="#{historialBean.actualizar}" />
 													 
                                            
                                         </div>
@@ -171,8 +175,8 @@
                                     </div>
                                     <!-- /.row (nested) -->
                                 </div>
-                                 
-			 </h:form>
+                                
+                                 </h:form>
                                 <!-- /.panel-body -->
                             </div>
 				<div class="row">
