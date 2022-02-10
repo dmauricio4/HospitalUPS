@@ -83,9 +83,8 @@ public class LoginServlet extends HttpServlet {
 			 
 			break;					
 		}	 
-		response.sendRedirect (url);
-
-		//request.getRequestDispatcher(url).forward(request, response);
+		System.out.println("valor de ruta >"+url);
+		response.sendRedirect (url); 
 		
 		 
 

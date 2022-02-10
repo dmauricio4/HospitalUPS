@@ -60,6 +60,15 @@ public class Cita implements Serializable {
 		this.doctorEspecialidad = doctorEspecialidad;
 		this.pacientePersona = pacientePersona;
 	}
+	
+
+	public Persona getPacientePersona() {
+		return pacientePersona;
+	}
+
+	public void setPacientePersona(Persona pacientePersona) {
+		this.pacientePersona = pacientePersona;
+	}
 
 	public Integer getIdCita() {
 		return this.idCita;
