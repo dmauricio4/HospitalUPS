@@ -44,6 +44,8 @@ public class Cita implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="id_paciente")
 	private Persona pacientePersona;
+	 
+
 
 
 	public Cita() {
@@ -61,7 +63,9 @@ public class Cita implements Serializable {
 		this.pacientePersona = pacientePersona;
 	}
 	
-
+	
+	
+ 
 	public Persona getPacientePersona() {
 		return pacientePersona;
 	}

@@ -37,10 +37,9 @@
 		
 	<f:event type="preRenderView"
 		listener="#{personaBean.ValidarSesion()}" />
- 
 		 
 	<f:event type="preRenderView"
-		listener="#{personaBean.listarCitasID()}" />    
+		listener="#{personaBean.listarCitasAtendidas()}" />   
  
 		
 </h:head>
@@ -54,7 +53,7 @@
 			
 				<a class="navbar-brand" href="/HospitalUPS/doctor/templateDoctor.xhtml">Home Doctor</a>
 
-				<h4  style="color:blue" >Citas Por Antender</h4>
+				<h4  style="color:blue" >Citas Atendidas</h4>
 
 					
 			</div>
@@ -74,14 +73,13 @@
 					data-toggle="dropdown" href="#"> <i class="fa fa-user fa-fw"></i>
 						Bienvenido(a):<strong> #{session.getAttribute("persona").getNombres()}</strong>  <b class="caret"></b>
 				</a>
-				
-				<a href="/HospitalUPS/CerrarSesionServlet">Cerrar Sesion</a>
-				
 					<ul class="dropdown-menu dropdown-user">
 						<li><p:commandButton icon="fa fa-fw fa-sign-out"
 								action="" value="Cerrar Sesión"
 								styleClass="red-button" /></li>
-					</ul></li>
+					</ul>
+					
+					</li>
 					 <li class="dropdown">
                         <form action="/HospitalUPS/CerrarSesionServlet" method="get" role="form">
                                  <a class="dropdown-toggle" data-toggle="dropdown" >                         
@@ -92,19 +90,22 @@
                        			 </a> 
                             </form>
                     </li>
+					
+					
 			</ul>
 			<!-- /.navbar-top-links -->
 
 	<div class="navbar-default sidebar" role="navigation">
-				<div class="sidebar-nav navbar-collapse"> 
-							
-							<ul class="nav nav-second-level">
-								<li><a href="#"><i class="fa fa-users fa-fw"></i>
+				<div class="sidebar-nav navbar-collapse">
+					<li><a href="#"><i class="fa fa-users fa-fw"></i>
 								Citas Medicas<span class="fa arrow"></span></a>
 							 <a href="/HospitalUPS/doctor/citasAtendidas.xhtml"> <i
-										class="icon-list-alt" />Citas Atendidas</a>
-                               </li>
+										class="icon-list-alt" />Citas Atendidas</a></li>
 							
+							<ul class="nav nav-second-level">
+							
+								<li><a href="citasporAtender.xhtml"> <i
+										class="icon-large icon-tasks" />Citas por Atender</a></li>
 							</ul>
 							<ul class="nav nav-second-level">
 								<li><a href="/HospitalUPS/doctor/citasCanceladas.xhtml"> <i

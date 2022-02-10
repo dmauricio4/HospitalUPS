@@ -29,22 +29,21 @@ public class HistorialFacade extends AbstractFacade<Historial> {
 	
 	
 	
-	public List<Cita> getCitasCedula(String cedula){
-		String query = "SELECT c FROM public.\"Cita\" c,public.\"Persona\" p WHERE  c.estado_cita ='En espera' and c.id_paciente= p.id_persona and p.cedula= :cedula";
-		List<Cita> citas = new ArrayList<Cita>();
+	public List<Historial> getCitasCedula(Integer citaid){
+		String query = "SELECT h FROM Historial h WHERE h.id_cita= :idCita";
+		List<Historial> historiales = new ArrayList<Historial>();
 		
 		try {
-			citas = (List<Cita>) entityManager.createQuery(query)
-											 .setParameter("cedula", cedula)
+			historiales = (List<Historial>) entityManager.createQuery(query)
+											 .setParameter("idCita", citaid)
 											 .getResultList();
-			
-			System.out.println("CItas: " + citas);
+			System.out.println("Historiales: " + historiales);
 			
 			
 		} catch (Exception e) {
 			System.out.println("--> ERROR Cita.getCitasbyEstado" + e.getMessage());
 		}
-		return citas;
+		return historiales;
 	}
 	
 	

@@ -3,6 +3,7 @@ package ec.edu.ups.controlador;
 import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -75,6 +76,7 @@ public class HistorialBean implements Serializable {
 		
 	}
   	
+	
 	
 
 	public Integer getId_cita() {
@@ -158,13 +160,33 @@ public class HistorialBean implements Serializable {
 
 	
 	
+	public String buscarHistorialCita() {
+		
+		System.out.println("Se ejecuta el aajaz para selecionar citas e historial---------");
+		
+		historiales= new ArrayList<Historial>();
+		historiales= ejbHistorialFacade.findAll();
+		for (Historial historial : historiales) {
+			Cita cita1 = historial.getCita();
+			System.out.println("------------ recore lista");
+			if(cita1.getIdCita()==cita.getIdCita())
+			{
+				System.out.println("Valr de condicion---"+historial.toString());
+				this.orden= historial.getOrden();
+				this.receta= historial.getReceta();
+				
+			}
+			
+		}
+		
+		
+		return null;
+	}
+	
 	public String guardar() {
-		Historial historial1= new Historial();	
-		 
 		
-		cita=ejbCitaFacade.find(this.id_cita);
-		
-		
+		Historial historial1= new Historial();		 
+		cita=ejbCitaFacade.find(this.id_cita);	
 		
 		historial1.setCita(cita);
 		historial1.setOrden(orden);
@@ -173,8 +195,8 @@ public class HistorialBean implements Serializable {
 		ejbHistorialFacade.create(historial1);	
 		
 		historiales = ejbHistorialFacade.findAll();
-		
-		 cita = new Cita();
+		 
+		 
 		 this.id_cita =0;
 		 this.orden = "";
 		 this.receta="";
@@ -183,9 +205,33 @@ public class HistorialBean implements Serializable {
 		return null;
 	}
  
-	public String actualizar(Historial c) {
-		ejbHistorialFacade.edit(c);
+	public String actualizar() {
+		
+		historiales = ejbHistorialFacade.findAll();		
+		Cita cita2 = new Cita();
+		Historial historial1= new Historial();		
+		cita=ejbCitaFacade.find(this.id_cita);
+		for (Historial historial : historiales) {			
+			cita2 =historial.getCita();
+			if(cita2.getIdCita().equals(cita.getIdCita())) {
+				historial.setCita(cita2);
+				historial.setOrden(this.orden);
+				historial.setReceta(this.receta);	
+
+				ejbHistorialFacade.edit(historial);
+ 
+				break;
+			}
+			
+			
+		}
+		
+		
 		historiales = ejbHistorialFacade.findAll();
+
+		 this.id_cita =0;
+		this.orden="";
+		this.receta="";
 		return null;
 	}
  
